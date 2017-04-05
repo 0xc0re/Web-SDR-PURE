@@ -1,0 +1,10 @@
+SetIQEnable false
+RxIQmuVal 0.25
+SetIQEnable true
+setClient Test
+q-server
+setFrequency 28400000
+setMode 1
+setFilter 100 3900
+setpwsmode 1
+setEncoding 0

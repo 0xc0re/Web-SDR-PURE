@@ -1,0 +1,8 @@
+*getserial?
+*dither on
+*preamp on
+*random on
+*setattenuator 0
+*alextxrelay 0
+q-master
+setFPS 964 15
