@@ -16,7 +16,7 @@ class Chat implements MessageComponentInterface {
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
-        echo "Message: " . json_encode($msg) . "\r\n";        
+        echo "Message: " . json_encode($msg) . "\r\n";
     }
 
     public function onClose(ConnectionInterface $conn) {
@@ -24,7 +24,7 @@ class Chat implements MessageComponentInterface {
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
-        echo "Error: " . json_encode($conn) . "\r\n";        
+        echo "Error: " . json_encode($conn) . "\r\n";
     }
 }
 
