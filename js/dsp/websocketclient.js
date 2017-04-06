@@ -8,7 +8,6 @@ var exampleSocket = null;
 function startWebsocket(){
     console.log("WebSocket starting...");
     exampleSocket = new WebSocket("ws://127.0.0.1:12346", "WebSDR");
-    console.log("WebSocket started...");
     exampleSocket.onmessage = readMessage;
 }
 

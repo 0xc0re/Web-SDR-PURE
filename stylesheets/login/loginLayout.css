@@ -44,12 +44,12 @@ button:hover {
 
 /* Avatar image */
 img.avatar {
-    width: 40%;
+    width: 20%;
     border-radius: 50%;
 }
 
 /* Add padding to containers */
-.container {
+.modalContainer {
     padding: 16px;
 }
 

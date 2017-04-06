@@ -18,13 +18,14 @@
     background-color: #fefefe;
     margin: 5px auto; /* 15% from the top and centered */
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 50%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
-.close {
+.closeModal {
     /* Position it in the top right corner outside of the modal */
-    position: absolute;
+    position: relative;
+    float: right;
     right: 25px;
     top: 0;
     color: #000;
@@ -33,8 +34,8 @@
 }
 
 /* Close button on hover */
-.close:hover,
-.close:focus {
+.closeModal:hover,
+.closeModal:focus {
     color: red;
     cursor: pointer;
 }
