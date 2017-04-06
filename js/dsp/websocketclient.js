@@ -6,7 +6,6 @@
 var exampleSocket = null;
 
 function startWebsocket(){
-    console.log("WebSocket starting...");
     exampleSocket = new WebSocket("ws://127.0.0.1:12346", "WebSDR");
     exampleSocket.onerror = connectionRefused;
     exampleSocket.onopen = connectionOpened;
@@ -15,8 +14,6 @@ function startWebsocket(){
 function sendMessage(msg){
     if(exampleSocket){
         exampleSocket.send(msg);
-    } else {
-        console.log("WebSocket not started");
     }
 }
 
@@ -40,5 +37,3 @@ function showMsg(msg){
     var msgArea = msgContainer.childNodes[1];
     msgArea.innerHTML = msg+"<hr>";
 }
-
-
