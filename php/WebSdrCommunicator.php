@@ -21,6 +21,7 @@ class SdrWS implements MessageComponentInterface
     public function onMessage(ConnectionInterface $from, $msg)
     {
         lws("Message received -> " . $msg);
+        $this->dsp->sendInitCommands();
     }
 
     public function onClose(ConnectionInterface $conn)
@@ -33,12 +34,10 @@ class SdrWS implements MessageComponentInterface
         lws("Error: " . $e);
     }
 
-    public function __construct()
+    public function __construct($dsp)
     {
+        $this->dsp = $dsp;
         lws("Construct " . get_class($this));
-
-        $s = BufC::pop();
-        lws("Buffer pop = " . $s);
     }
 }
 
@@ -126,20 +125,16 @@ BufC::init();
 
 // tcpSocket
 $rec = new DspClient();
-//$rec->connect();
+$rec->connect();
 $rec->start();
 
 // Websocket
 $port = 12346;
-$wss = new HttpServer(new WsServer(new SdrWS()));
+$wss = new HttpServer(new WsServer(new SdrWS($rec)));
 $s = IoServer::factory($wss, $port);
 lws("Started on port: " . $port);
 $s->run();
 
 l("INVALID","END");
-
-
-
-
 
 ?>

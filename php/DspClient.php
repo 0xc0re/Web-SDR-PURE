@@ -8,8 +8,6 @@ class DspClient extends Thread
         $this->port = "8000";
         $this->isConnected = false;
 
-        BufC::push("DSPCLIENT ONLINE");
-
         lds("Construct " . get_class($this));
     }
 
@@ -76,20 +74,38 @@ class DspClient extends Thread
 
     public function run()
     {
-
         if ($this->isConnected == false) {
             lds("DspClient not started, because no connection");
             return;
         }
 
+        $counter = 0;
+        $startTime = round(microtime(true) * 1000);
+
         lds("DspClient receiving thread started");
         while ($this->isConnected) {
-
             while ($out = socket_read($this->socket, 4096)) {
-                lds("Message received: " . strlen($out));
+
+                $this->handleData($out);
+
+                sleep(1);
+
+                //lds("Message received: " . strlen($out));
+                $counter = $counter + 1;
+
+                if (round(microtime(true) * 1000) - $startTime > 1000){
+                    //lds("Messages/Second: " . $counter);
+                    $counter = 0;
+                    $startTime = round(microtime(true) * 1000);
+                }
             }
         }
         lds("DspClient receiving thread stopped");
+    }
+
+    private function handleData($data)
+    {
+        var_dump($data);
     }
 }
 
