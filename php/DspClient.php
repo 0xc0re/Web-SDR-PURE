@@ -1,14 +1,20 @@
 <?php
 
-
-class DspReceiver extends Thread
+class DspClient extends Thread
 {
-
     function __construct()
     {
         $this->address = "127.0.0.1";
         $this->port = "8000";
         $this->isConnected = false;
+
+        BufC::push("DSPCLIENT ONLINE");
+
+        lds("Construct " . get_class($this));
+    }
+
+    private function l($msg){
+        echo "[DSC]: " . $msg . "\n";
     }
 
     function connect()
@@ -16,16 +22,20 @@ class DspReceiver extends Thread
         $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 
         if ($this->socket === false) {
-            echo "Socket creation failed\n";
-            //echo "socket_create() failed: reason: " . socket_strerror(socket_last_error()) . "\n";
+            lds("Socket creation failed");
         }
 
         if (socket_connect($this->socket, $this->address, $this->port) === false) {
-            echo "Connection failed\n";
-//            echo "socket_connect() failed: reason: " . socket_strerror(socket_last_error($this->socket)) . "\n";
+            lds("Connection failed");
         } else {
             $this->isConnected = true;
         }
+    }
+
+    function sendInitCommands() {
+        $this->sendCommands("commands1");
+        $this->sendCommands("commands2");
+        $this->sendCommands("commands3");
     }
 
     function sendCommands($file)
@@ -38,7 +48,6 @@ class DspReceiver extends Thread
 
             foreach (file($file) as $line) {
                 $line = str_replace("\n", "", $line);
-                //echo "[" . $line ."] -> strlen= " . strlen($line) . "\n";
                 $c = strlen($line);
                 while ($c < 64) {
                     $line = $line . "\0";
@@ -48,19 +57,18 @@ class DspReceiver extends Thread
 
                 $nrCommands += 1;
             }
-            //echo $cmd . "-->" . strlen($cmd) . "\n";
             $this->sendCommand($cmd);
-            echo "Nr of commands sent: " . $nrCommands . "\n";
+            lds("Nr of commands sent: " . $nrCommands);
             fclose($handle);
         } else {
-            echo "Could not open file: " . $file . "\n";
+            lds("Could not open file: " . $file);
         }
     }
 
     function sendCommand($cmd)
     {
         if ($this->isConnected == false) {
-            echo "Could not send command, because no connection\n";
+            lds("Could not send command, because no connection");
             return;
         }
         socket_write($this->socket, $cmd, strlen($cmd));
@@ -70,29 +78,20 @@ class DspReceiver extends Thread
     {
 
         if ($this->isConnected == false) {
-            echo "Receiver not started, because no connection\n";
+            lds("DspClient not started, because no connection");
             return;
         }
 
-        echo "Receiver started\n";
+        lds("DspClient receiving thread started");
         while ($this->isConnected) {
 
             while ($out = socket_read($this->socket, 4096)) {
-                echo "Message received: " . strlen($out) . "\n";
-                break;
+                lds("Message received: " . strlen($out));
             }
         }
-        echo "Receiver stopped\n";
+        lds("DspClient receiving thread stopped");
     }
 }
 
-
-$rec = new DspReceiver();
-$rec->connect();
-$rec->start();
-
-$rec->sendCommands("commands1");
-$rec->sendCommands("commands2");
-$rec->sendCommands("commands3");
 
 ?>
