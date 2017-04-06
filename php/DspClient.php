@@ -2,12 +2,13 @@
 
 class DspClient extends Thread
 {
-    function __construct()
+    function __construct($wss)
     {
         $this->address = "127.0.0.1";
         $this->port = "8000";
         $this->isConnected = false;
-
+        $this->MSGSENT = false;
+        $this->wss = $wss;
         lds("Construct " . get_class($this));
     }
 
@@ -86,9 +87,10 @@ class DspClient extends Thread
         while ($this->isConnected) {
             while ($out = socket_read($this->socket, 4096)) {
 
-                $this->handleData($out);
+                if ($counter % 10 == 0)
+                    $this->handleData($out);
 
-                sleep(1);
+                //sleep(1);
 
                 //lds("Message received: " . strlen($out));
                 $counter = $counter + 1;
@@ -103,9 +105,14 @@ class DspClient extends Thread
         lds("DspClient receiving thread stopped");
     }
 
-    private function handleData($data)
+    private function handleData()
     {
-        var_dump($data);
+
+        if ($this->MSGSENT == false)
+        {
+            $this->wss->send("test");
+        }
+        $this->MSGSENT = true;
     }
 }
 

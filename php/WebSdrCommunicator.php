@@ -11,17 +11,25 @@ use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 
-class SdrWS implements MessageComponentInterface
+class SdrWS extends Thread implements MessageComponentInterface
 {
     public function onOpen(ConnectionInterface $conn)
     {
         lws("Conection opened, id=" . $conn->resourceId . ", address=" . $conn->remoteAddress);
+        lws("Open Thread = " . Thread::getCurrentThreadId());
+
+        $this->mainT = Thread::getCurrentThread();
+        $this->dspc = new DspClient($this);
+        $this->dspc->connect();
+        $this->dspc->start();
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
         lws("Message received -> " . $msg);
-        $this->dsp->sendInitCommands();
+        $this->dspc->sendInitCommands();
+
+        lws("Message Thread = " . Thread::getCurrentThreadId());
     }
 
     public function onClose(ConnectionInterface $conn)
@@ -32,12 +40,21 @@ class SdrWS implements MessageComponentInterface
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
         lws("Error: " . $e);
+        $conn->close();
     }
 
-    public function __construct($dsp)
+    public function send($m){
+        lws("send Thread = " . Thread::getCurrentThreadId());
+        //$this->cl->send($m);
+    }
+
+    public function __construct()
     {
-        $this->dsp = $dsp;
         lws("Construct " . get_class($this));
+    }
+
+    public function run()
+    {
     }
 }
 
@@ -120,17 +137,21 @@ class BufC
     }
 }
 
-// buffer for data
+
 BufC::init();
 
 // tcpSocket
-$rec = new DspClient();
-$rec->connect();
-$rec->start();
+//$dsp = new DspClient();
+//$dsp->connect();
+//$dsp->start();
 
 // Websocket
+$sdrws = new SdrWS();
+
+//$dsp->cc = $sdrws;
+
 $port = 12346;
-$wss = new HttpServer(new WsServer(new SdrWS($rec)));
+$wss = new HttpServer(new WsServer($sdrws));
 $s = IoServer::factory($wss, $port);
 lws("Started on port: " . $port);
 $s->run();
