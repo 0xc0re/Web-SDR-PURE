@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/Website.iml" filepath="$PROJECT_DIR$/.idea/Website.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/.idea/BDA-WebSDR-.iml" filepath="$PROJECT_DIR$/.idea/BDA-WebSDR-.iml" />
->>>>>>> f2640d705f44678a65acc81f9595f78fbca2f8a0
     </modules>
   </component>
 </project>
