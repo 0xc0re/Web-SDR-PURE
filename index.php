@@ -17,7 +17,11 @@ include "./sites/template/header.php";
 
 <!-- Content -->
 <?PHP
-include "./sites/public/intro.php";
+    if ($_SERVER['QUERY_STRING'] == "") {
+        include "./sites/public/intro.php";
+    } elseif ($_SERVER['QUERY_STRING'] == "site=socketTest") {
+        include "./sites/public/socketTester.php";
+    }
 ?>
 
 <!-- Footer -->

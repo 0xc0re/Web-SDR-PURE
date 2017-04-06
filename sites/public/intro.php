@@ -5,10 +5,10 @@ include "./customContent/content/welcome.php";
 
 <!-- Modal Login -->
 <div class="container">
-    <div class="sixteen columns">
+    <div class="four columns">&nbsp;</div>
+    <div class="eight columns">
         <!-- Button to open the modal login form -->
         <button onclick="openLoginFrame();">Login</button>
-
         <!-- The Modal -->
         <div id="modalLogin" class="modal">
 
@@ -37,4 +37,5 @@ include "./customContent/content/welcome.php";
             </form>
         </div>
     </div>
+    <div class="four columns">&nbsp;</div>
 </div>
