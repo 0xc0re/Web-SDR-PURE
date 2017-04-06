@@ -37,7 +37,7 @@
     </div>
     <div class="eight columns">
         <button onclick="
-        var message = document.getElementById("msgBox");
+        var message = document.getElementById('msgBox');
         sendMessage(message.value);
         ">Send message</button>
     </div>
