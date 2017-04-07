@@ -1,15 +1,13 @@
 <?php
-
-function lws($msg) {
-    l("WS", $msg);
+function validateInput($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 
-function lds($msg){
-    l("DS", $msg);
+function validateEmail($email) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//        "Invalid email format";
+    }
 }
-
-function l($pre, $msg){
-    echo "[" . date("Y-m-d H:i:s.ms") . "|" . $pre . "]: " . $msg . "\n";
-}
-
-?>
