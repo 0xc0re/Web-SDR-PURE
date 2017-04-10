@@ -54,7 +54,7 @@ function startSession($username, $isNew){
 function setUserLevel($role){
 	global $userLevel;
 	if($role == "adminstrator"){
-		$userLevel = 0;
+		$userLevel = 1;
 	} else if($role == "moderator"){
 		$userLevel = 10;
 	} else if($role == "listener"){
