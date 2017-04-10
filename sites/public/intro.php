@@ -9,7 +9,7 @@ include "./customContent/content/welcome.php";
     <div class="eight columns">
 
         <?php if(isUserLoggedIn()) : ?>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+            <form style="border:none;" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                 <button style="background-color: #8a1f11;" type="submit" name="logout">Logout</button>
             </form>
         <?php else : ?>
