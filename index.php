@@ -10,6 +10,11 @@ include "./sites/template/pageSetup.php";
 <body class="wrap">
 <!-- Primary Page Layout
 ================================================== -->
+<!-- phplogic -->
+<?PHP
+include "./php/common.php";
+?>
+
 <!-- Header -->
 <?PHP
 include "./sites/template/header.php";
@@ -17,11 +22,7 @@ include "./sites/template/header.php";
 
 <!-- Content -->
 <?PHP
-    if ($_SERVER['QUERY_STRING'] == "") {
-        include "./sites/public/intro.php";
-    } elseif ($_SERVER['QUERY_STRING'] == "site=socketTest") {
-        include "./sites/public/socketTester.php";
-    }
+	buildPageContent();
 ?>
 
 <!-- Footer -->

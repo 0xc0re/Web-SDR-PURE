@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<roles>
+	<role name="adminstrator">
+		<user>test</user>
+		<user>admin</user>
+	</role>
+	<role name="moderator">
+		<user>modi</user>
+	</role>
+	<role name="listener">
+		<user>list</user>
+	</role>
+</roles>

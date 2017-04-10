@@ -26,7 +26,7 @@ include "./customContent/content/welcome.php";
                     <label><b>Password</b></label>
                     <input type="password" placeholder="Enter Password" name="psw" required>
 
-                    <button type="submit">Login</button>
+                    <button type="submit" name="login">Login</button>
 <!--                    <input type="checkbox" checked="checked"> Remember me-->
                 </div>
 

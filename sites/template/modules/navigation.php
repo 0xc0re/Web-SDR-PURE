@@ -1,10 +1,44 @@
 <nav id="main-nav" class="two thirds column omega">
     <ul id="main-nav-menu" class="nav-menu">
-        <li id="menu-item-1" class="<?php echo($_SERVER['QUERY_STRING'] == "" ? "current" : "");?>">
-            <a href="index.php">Home</a>
-        </li>
-        <li id="menu-item-2" class="<?php echo($_SERVER['QUERY_STRING'] == "site=socketTest" ? "current" : "");?>">
-            <a href="index.php?site=socketTest">Sockettest</a>
-        </li>
+		<?php drawNavigation(); ?>
     </ul>
 </nav>
+
+<?php
+function drawNavigation(){
+	//Public area
+	echo(buildMenupoint("Home", ""));
+	
+	//Restricted area
+	if(isUserLoggedIn()){
+		$userLevel = getUserLevel();
+		if($userLevel <= 20){ //listener level
+			echo(buildMenupoint("Sockettest", "site=socketTest"));
+			echo(buildMenupoint("MY PROFILE", "site=profile"));
+			echo(buildMenupoint("LISTENER", "site=listener"));
+		}
+		if($userLevel <= 10){ //moderator level
+			echo(buildMenupoint("MODERATOR", "site=moderator"));
+		}
+		if($userLevel <= 1){ //admin level
+			echo(buildMenupoint("ADMIN", "site=listener"));
+			echo(buildMenupoint("UserMgmt", "site=usrMgmt"));
+		}
+	}
+}
+
+function buildMenupoint($label, $siteLocation){
+	$response = '<li id="menu-item-1" class="'.setCurrent($siteLocation).'">';
+	$response .= '<a href="index.php?'.$siteLocation.'">'.$label.'</a>';
+	$response .= '</li>';
+	return $response;
+}
+
+function setCurrent($siteLocation){
+	if($_SERVER['QUERY_STRING'] == $siteLocation){
+		return "current";
+	} else {
+		return "";
+	}
+}
+?>
