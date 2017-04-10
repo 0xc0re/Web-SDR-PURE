@@ -22,8 +22,6 @@ function sendMessage(msg){
         }
 
         exampleSocket.send(msg);
-    } else {
-        console.log("WebSocket not started");
     }
 }
 
@@ -47,5 +45,3 @@ function showMsg(msg){
     var msgArea = msgContainer.childNodes[1];
     msgArea.innerHTML = msg+"<hr>";
 }
-
-
