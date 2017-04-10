@@ -7,13 +7,20 @@ var exampleSocket = null;
 
 function startWebsocket(){
     console.log("WebSocket starting...");
-    exampleSocket = new WebSocket("ws://127.0.0.1:12346", "WebSDR");
+    exampleSocket = new WebSocket("ws://127.0.0.1:12346", "binary");
     exampleSocket.onerror = connectionRefused;
     exampleSocket.onopen = connectionOpened;
 }
 
 function sendMessage(msg){
     if(exampleSocket){
+
+        var i = msg.length;
+        while( i < 64){
+            msg = msg.concat("\0");
+            i = i+1;
+        }
+
         exampleSocket.send(msg);
     } else {
         console.log("WebSocket not started");
@@ -21,7 +28,7 @@ function sendMessage(msg){
 }
 
 function readMessage (event) {
-    console.log("Server:" + event.data);
+    console.log("Server Msg: Type=" + event.type + ",Size=" + event.size);
 }
 
 function connectionOpened(){
