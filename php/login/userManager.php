@@ -3,21 +3,28 @@
 $username = $password = "";
 $userLevel = 100;
 
+function logout(){
+    if(session_id()) {
+        session_destroy();
+    }
+}
+
 function login(){
     $username = validateInput($_POST["uname"]);
     //$password = validateInput($_POST["psw"]);
-	//$hash = password_hash($_POST['psw'], PASSWORD_DEFAULT);
-		
-	$xml = simplexml_load_file("./customContent/userManagement/userList.xml") or die("Error: Cannot create object");
-	foreach($xml->children() as $user) { 
-		if($user->username == $username){
-			if($user->password == ""){
-				checkDefaultPw($user);
-			} else {
-				checkPw($user);
-			}
-		}
-	}
+    //$hash = password_hash($_POST['psw'], PASSWORD_DEFAULT);
+
+    $xml = simplexml_load_file("./customContent/userManagement/userList.xml") or die("Error: Cannot create object");
+    foreach($xml->children() as $user) {
+        if($user->username == $username){
+            if($user->password == ""){
+                checkDefaultPw($user);
+            } else {
+                checkPw($user);
+            }
+            break;
+        }
+    }
 }
 
 function checkDefaultPw($user){
@@ -30,6 +37,10 @@ function checkDefaultPw($user){
 }
 
 function startSession($username, $isNew){
+    if(session_id()) {
+        logout();
+    }
+
 	$userRole = getUserRole($username);
 	setUserLevel($userRole);
 	

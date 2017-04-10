@@ -6,7 +6,9 @@ include "./php/pages/pageManager.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if(isset($_POST['login'])){
 		login();
-	}
+	} else if(isset($_POST['logout'])){
+        logout();
+    }
 }
 
 getUserRole("test");
