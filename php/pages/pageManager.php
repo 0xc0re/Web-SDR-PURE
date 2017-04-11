@@ -4,5 +4,7 @@ function buildPageContent(){
         include "./sites/public/intro.php";
     } elseif ($_SERVER['QUERY_STRING'] == "site=socketTest") {
         include "./sites/public/socketTester.php";
-    }
+    } elseif ($_SERVER['QUERY_STRING'] == "site=logout") {
+		include "./sites/public/intro.php";
+	}
 }

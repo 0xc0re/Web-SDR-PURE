@@ -14,8 +14,8 @@ function drawNavigation(){
 		$userLevel = getUserLevel();
 		if($userLevel <= 20){ //listener level
 			echo(buildMenupoint("Sockettest", "site=socketTest"));
-			echo(buildMenupoint("MY PROFILE", "site=profile"));
-			echo(buildMenupoint("LISTENER", "site=listener"));
+			echo(buildMenupoint("My Profile", "site=profile"));
+			echo(buildMenupoint("Logout", "site=logout"));
 		}
 		if($userLevel <= 10){ //moderator level
 			echo(buildMenupoint("MODERATOR", "site=moderator"));

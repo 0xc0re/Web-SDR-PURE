@@ -1,6 +1,10 @@
 <?php
-include "./php/login/userManager.php";
 include "./php/pages/pageManager.php";
+include "./php/login/userManager.php";
+
+if($_SERVER['QUERY_STRING'] == "site=logout"){
+	logout();
+}
 
 //Initiate the login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,8 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         logout();
     }
 }
-
-getUserRole("test");
 
 function validateInput($data) {
     $data = trim($data);

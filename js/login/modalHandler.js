@@ -6,13 +6,11 @@ function getModalFrame(){
 
 function openLoginFrame(){
     if(!modal) getModalFrame();
-    console.log("openLoginFrame");
     modal.style.display='block';
     window.onclick = closeListener;
 }
 
 function closeLoginFrame(event){
-    console.log("closeLoginFrame");
     modal.style.display = "none";
     window.onclick = null;
 }

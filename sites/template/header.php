@@ -4,12 +4,6 @@
 		//Logo Img
         include "./sites/template/modules/logo.php";
 
-        //Title
-        //include "./sites/template/modules/name.php";
-		
-		//User
-        //include "./sites/template/modules/name.php";
-
         //Navigation
         include "./sites/template/modules/navigation.php";
         ?>
