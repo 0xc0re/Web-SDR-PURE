@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="stylesheets/template/base.css">
     <link rel="stylesheet" href="stylesheets/template/skeleton.css">
     <link rel="stylesheet" href="stylesheets/template/layout.css">
+    <link rel="stylesheet" href="stylesheets/template/forms.css">
     <link rel="stylesheet" href="stylesheets/login/modalLoginLayout.css">
     <link rel="stylesheet" href="stylesheets/login/loginLayout.css">
 

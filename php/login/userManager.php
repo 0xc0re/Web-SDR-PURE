@@ -12,6 +12,7 @@ function logout(){
 	if(isset($_SESSION['username'])) unset($_SESSION['username']);
 	if(isset($_SESSION['userrole'])) unset($_SESSION['userrole']);
 	if(isset($_SESSION['isNew'])) unset($_SESSION['isNew']);
+	//if(isset($_SESSION['pwChange'])) unset($_SESSION['pwChange']);
 }
 
 function login(){
