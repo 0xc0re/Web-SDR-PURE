@@ -9,6 +9,4 @@ function buildPageContent(){
 	} elseif ($_SERVER['QUERY_STRING'] == "site=profile") {
 		include "./sites/private/myProfile.php";
 	}
-	
-	
 }

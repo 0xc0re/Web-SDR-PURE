@@ -1,15 +1,11 @@
 <?php
 include "./php/pages/pageManager.php";
-include "./php/login/userManager.php";
+include "./php/user/userManager.php";
+include "./php/user/loginManager.php";
 
 initChecks();
 
-
 function initChecks(){
-
-//HTTP_HOST
-//SERVER_NAME
-//var_dump($_SERVER);
 	listenToFormEvents();
 	checkIfLogout();
 	checkIfNewAccount();
@@ -20,9 +16,6 @@ function checkIfNewAccount(){
 		if(!$_SESSION['isNew']) return;
 		if($_SERVER['QUERY_STRING'] == "site=profile") return;
 		
-		//if(isset($_SESSION["pwChange"])) return;
-		//$_SESSION["pwChange"] = true;
-
 		$url = $_SERVER["REQUEST_URI"];
 		$pos = strpos($url, "?");
 		if($pos !== false) $url = substr($url, 0, $pos);
@@ -42,6 +35,8 @@ function listenToFormEvents(){
 			login();
 		} else if(isset($_POST['logout'])){
 			logout();
+		} else if(isset($_POST['changeUser'])){
+			saveUser();
 		}
 	}
 }

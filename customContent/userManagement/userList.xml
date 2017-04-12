@@ -3,7 +3,7 @@
 	<user>
 		<username>test</username>
 		<defaultPassword>test</defaultPassword>
-		<password></password>
+		<password>$2y$10$9IL6WdrCZ1APGhBegX9lL.wa.EcXYKZzcrRPjvb9Sy9wh7r3mkEbO</password>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
 		<address>TestStrt</address>
@@ -12,7 +12,7 @@
 	<user>
 		<username>admin</username>
 		<defaultPassword>admin</defaultPassword>
-		<password></password>
+		<password/>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
 		<address>TestStrt</address>
@@ -21,7 +21,7 @@
 	<user>
 		<username>modi</username>
 		<defaultPassword>modi</defaultPassword>
-		<password></password>
+		<password/>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
 		<address>TestStrt</address>
@@ -30,7 +30,7 @@
 	<user>
 		<username>list</username>
 		<defaultPassword>list</defaultPassword>
-		<password></password>
+		<password/>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
 		<address>TestStrt</address>

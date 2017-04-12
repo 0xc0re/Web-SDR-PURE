@@ -1,8 +1,3 @@
-/**
- * Created by kusi on 4/5/17.
- */
-//if ("WebSocket" in window) console.log("WebSocket allowed");
-
 var exampleSocket = null;
 
 function startWebsocket(){
@@ -29,11 +24,4 @@ function connectionOpened(){
 
 function connectionRefused(){
     showMsg("Connection refused")
-}
-
-function showMsg(msg){
-    var msgContainer = document.getElementById("showMsg");
-    msgContainer.style.display = "";
-    var msgArea = msgContainer.childNodes[1];
-    msgArea.innerHTML = msg+"<hr>";
 }
