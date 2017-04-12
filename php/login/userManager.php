@@ -12,7 +12,6 @@ function logout(){
 	if(isset($_SESSION['username'])) unset($_SESSION['username']);
 	if(isset($_SESSION['userrole'])) unset($_SESSION['userrole']);
 	if(isset($_SESSION['isNew'])) unset($_SESSION['isNew']);
-	//if(isset($_SESSION['pwChange'])) unset($_SESSION['pwChange']);
 }
 
 function login(){
@@ -20,16 +19,11 @@ function login(){
     //$password = validateInput($_POST["psw"]);
     //$hash = password_hash($_POST['psw'], PASSWORD_DEFAULT);
 
-    $xml = simplexml_load_file("./customContent/userManagement/userList.xml") or die("Error: Cannot create object");
-    foreach($xml->children() as $user) {
-        if($user->username == $username){
-            if($user->password == ""){
-                checkDefaultPw($user);
-            } else {
-                checkPw($user);
-            }
-            break;
-        }
+    $user = getUserNode($username);
+    if($user->password == ""){
+        checkDefaultPw($user);
+    } else {
+        checkPwcheckPw($user);
     }
 }
 
@@ -41,6 +35,16 @@ function checkDefaultPw($user){
 	} else {
 		//Handle error
 	}
+}
+
+function checkPw($user){
+    $password = validateInput($_POST["psw"]);
+    if($user->password == $password){
+        startSession((string)$user->username, false);
+        setUserLevel();
+    } else {
+        //Handle error
+    }
 }
 
 function startSession($username, $isNew){
@@ -85,15 +89,18 @@ function getUserRole($username){
 	return "guest";
 }
 
-function checkPw($user){
-echo "Check Normal";
-echo $user->password;
-}
-
 function isUserLoggedIn(){
 	if(isset($_SESSION['valid']) && isset($_SESSION['username']) && isset($_SESSION['userrole'])) {
 		return true;
 	} else {
 		return false;
 	}
+}
+
+function getUserNode($username){
+    $xml = simplexml_load_file("./customContent/userManagement/userList.xml") or die("Error: Cannot create object");
+    foreach($xml->children() as $user) {
+        if ($user->username == $username) return $user;
+    }
+    return false;
 }
