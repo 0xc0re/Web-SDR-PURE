@@ -3,20 +3,6 @@
 include "./customContent/content/welcome.php";
 ?>
 
-<!-- Testzone -->
-<div class="container">
-    <div class="four columns">&nbsp;</div>
-    <div class="eight columns">
-        <?php
-            echo "User : <br>";
-            $node = getUserNode("test");
-            echo $node->name;
-        ?>
-    </div>
-    <div class="four columns">&nbsp;</div>
-    <hr>
-</div>
-
 <!-- Modal Login -->
 <div class="container">
     <div class="four columns">&nbsp;</div>

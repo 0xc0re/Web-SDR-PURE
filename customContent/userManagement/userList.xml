@@ -6,7 +6,7 @@
 		<password></password>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
-		<adress>TestStrt</adress>
+		<address>TestStrt</address>
 		<postalCode>6000</postalCode>
 	</user>
 	<user>
@@ -15,7 +15,7 @@
 		<password></password>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
-		<adress>TestStrt</adress>
+		<address>TestStrt</address>
 		<postalCode>6000</postalCode>
 	</user>
 	<user>
@@ -24,7 +24,7 @@
 		<password></password>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
-		<adress>TestStrt</adress>
+		<address>TestStrt</address>
 		<postalCode>6000</postalCode>
 	</user>
 	<user>
@@ -33,7 +33,7 @@
 		<password></password>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
-		<adress>TestStrt</adress>
+		<address>TestStrt</address>
 		<postalCode>6000</postalCode>
 	</user>
 </users>

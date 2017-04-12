@@ -23,11 +23,17 @@
 </div>
 
 <?php
-
 function buildProfileForm(){
+	$user = getUserNode($_SESSION['username']);
+	
 	$action = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
 	$form = '<form class="borderlessForm" action="'.$action.'" method="post">';
-	$form .= addRow("Username", "usrname", $_SESSION['username']);
+	$form .= addRow("Username", "usrname", $user->username);
+	$form .= addRow("Password", "psw1", "");
+	$form .= addRow("Password2", "psw2", "");
+	$form .= addRow("Name", "name", $user->name);
+	$form .= addRow("Address", "address", $user->address);
+	$form .= addRow("PLZ", "plz", $user->postalCode);
 	$form .= '<button type="submit" name="changeUser">Save Changes</button>';
 	$form .= '</form>';
 	return $form;
