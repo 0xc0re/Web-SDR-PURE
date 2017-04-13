@@ -13,7 +13,16 @@ function sendMessage(msg){
 }
 
 function readMessage (event) {
-    console.log("Server:" + event.data);
+    var myReader = new FileReader();
+    //handler executed once reading(blob content referenced to a variable) from blob is finished.
+    myReader.addEventListener("loadend", function(e){
+        console.log("Server:" + e.srcElement.result);
+        //document.getElementById("paragraph").innerHTML = e.srcElement.result;//prints a string
+    });
+    //start the reading process.
+    myReader.readAsText(event.data);
+
+
 }
 
 function connectionOpened(){
