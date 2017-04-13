@@ -7,20 +7,28 @@ setUserLevel();
 function logout(){
 	global $userLevel;
 	$userLevel = 100;
-	if(isset($_SESSION['valid'])) unset($_SESSION['valid']);
-	if(isset($_SESSION['timeout'])) unset($_SESSION['timeout']);
-	if(isset($_SESSION['username'])) unset($_SESSION['username']);
-	if(isset($_SESSION['userrole'])) unset($_SESSION['userrole']);
-	if(isset($_SESSION['isNew'])) unset($_SESSION['isNew']);
+    unsetSessionIfSet('valid');
+    unsetSessionIfSet('timeout');
+    unsetSessionIfSet('username');
+    unsetSessionIfSet('userrole');
+    unsetSessionIfSet('isNew');
+}
+
+function unsetSessionIfSet($key){
+    if(isset($_SESSION[$key])) unset($_SESSION[$key]);
 }
 
 function login(){
     $username = validateInput($_POST["uname"]);
     $user = getUserNode($username);
-    if($user->password == ""){
-        checkDefaultPw($user);
+    if($user){
+        if($user->password == ""){
+            checkDefaultPw($user);
+        } else {
+            checkPw($user);
+        }
     } else {
-        checkPw($user);
+        $_SESSION["ERROR_MESSAGE"] = "User does not exist";
     }
 }
 
@@ -29,28 +37,18 @@ function checkDefaultPw($user){
 		startSession((string)$user->username, true);
 		setUserLevel();
 	} else {
-		//Handle error
+	    $_SESSION["ERROR_MESSAGE"] = "Password is incorrect";
 	}
 }
 
 function checkPw($user){
 	$password = validateInput($_POST["psw"]);
 	$verify = password_verify($password, $user->password);
-
-	echo $verify;
-	/*
-    $password1 = password_hash(), PASSWORD_DEFAULT);
-    $password2 = password_hash(validateInput($_POST["psw"]), PASSWORD_DEFAULT);
-	echo "Show the thingys <br>";
-	echo $password1 . "<br>";
-	echo $password2 . "<br>";
-	//echo $user->password;
-	*/
     if($verify){
         startSession((string)$user->username, false);
         setUserLevel();
     } else {
-        //Handle error
+        $_SESSION["ERROR_MESSAGE"] = "Password is incorrect";
     }
 }
 

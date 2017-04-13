@@ -3,37 +3,23 @@
 	<user>
 		<username>test</username>
 		<defaultPassword>test</defaultPassword>
-		<password>$2y$10$9IL6WdrCZ1APGhBegX9lL.wa.EcXYKZzcrRPjvb9Sy9wh7r3mkEbO</password>
-		<name>Testname</name>
+		<password>$2y$10$771dkMhxkbXFsWgVSZqXxu9ShgvkQyUn0hWJVjgClYkrgr3gUCILe</password>
+		<email>asd</email>
+		<name>TestName</name>
 		<surname>TestSurname</surname>
 		<address>TestStrt</address>
 		<postalCode>6000</postalCode>
+		<locked>0</locked>
 	</user>
 	<user>
 		<username>admin</username>
 		<defaultPassword>admin</defaultPassword>
+		<email/>
 		<password/>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
 		<address>TestStrt</address>
 		<postalCode>6000</postalCode>
-	</user>
-	<user>
-		<username>modi</username>
-		<defaultPassword>modi</defaultPassword>
-		<password/>
-		<name>Testname</name>
-		<surname>TestSurname</surname>
-		<address>TestStrt</address>
-		<postalCode>6000</postalCode>
-	</user>
-	<user>
-		<username>list</username>
-		<defaultPassword>list</defaultPassword>
-		<password/>
-		<name>Testname</name>
-		<surname>TestSurname</surname>
-		<address>TestStrt</address>
-		<postalCode>6000</postalCode>
+		<locked>0</locked>
 	</user>
 </users>

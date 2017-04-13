@@ -15,14 +15,15 @@ function checkIfNewAccount(){
 	if(isset($_SESSION['isNew'])){
 		if(!$_SESSION['isNew']) return;
 		if($_SERVER['QUERY_STRING'] == "site=profile") return;
-		
-		$url = $_SERVER["REQUEST_URI"];
-		$pos = strpos($url, "?");
-		if($pos !== false) $url = substr($url, 0, $pos);
-		$url .= "?site=profile";
-		header('Location: '.$url);
-		die();
+        redirectTo("site=profile");
 	}
+}
+
+function redirectTo($site){
+    $url = $_SERVER["PHP_SELF"];
+    $url .= "?". $site;
+    header('Location: '.$url);
+    die();
 }
 
 function checkIfLogout(){
@@ -33,6 +34,9 @@ function listenToFormEvents(){
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_POST['login'])){
 			login();
+			if(isset($_SESSION["ERROR_MESSAGE"])){
+                redirectTo("");
+            }
 		} else if(isset($_POST['logout'])){
 			logout();
 		} else if(isset($_POST['changeUser'])){

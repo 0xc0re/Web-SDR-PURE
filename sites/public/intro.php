@@ -3,6 +3,22 @@
 include "./customContent/content/welcome.php";
 ?>
 
+<?php if(isset($_SESSION['ERROR_MESSAGE'])) : ?>
+<div class="container">
+    <div class="sixteen columns">
+        <div class="tagline">
+            <p class="errorMessage">
+                <?php
+                echo $_SESSION['ERROR_MESSAGE'];
+                unset($_SESSION['ERROR_MESSAGE']);
+                ?>
+            </p>
+        </div>
+        <hr>
+    </div>
+</div>
+<?php endif; ?>
+
 <!-- Modal Login -->
 <div class="container">
     <div class="four columns">&nbsp;</div>

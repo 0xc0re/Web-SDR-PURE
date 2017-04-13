@@ -12,18 +12,21 @@ function drawNavigation(){
 	//Restricted area
 	if(isUserLoggedIn()){
 		$userLevel = getUserLevel();
-		if($userLevel <= 20){ //listener level
-			echo(buildMenupoint("Sockettest", "site=socketTest"));
-			echo(buildMenupoint("My Profile", "site=profile"));
-			echo(buildMenupoint("Logout", "site=logout"));
-		}
-		if($userLevel <= 10){ //moderator level
-			echo(buildMenupoint("MODERATOR", "site=moderator"));
-		}
-		if($userLevel <= 1){ //admin level
-			echo(buildMenupoint("ADMIN", "site=listener"));
-			echo(buildMenupoint("UserMgmt", "site=usrMgmt"));
-		}
+        /*
+        if($userLevel <= 10){ //moderator level
+
+        }
+
+        if($userLevel <= 1){ //admin level
+            echo(buildMenupoint("ADMIN", "site=listener"));
+            echo(buildMenupoint("UserMgmt", "site=usrMgmt"));
+        }*/
+        if($userLevel <= 20){ //listener level
+            echo(buildMenupoint("Channels", "site=channels"));
+            echo(buildMenupoint("Sockettest", "site=socketTest"));
+            echo(buildMenupoint("My Profile", "site=profile"));
+            echo(buildMenupoint("Logout", "site=logout"));
+        }
 	}
 }
 
