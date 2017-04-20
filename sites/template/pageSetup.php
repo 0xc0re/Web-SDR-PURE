@@ -21,6 +21,7 @@
 
     <!-- Javascript
   ================================================== -->
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js" data-dojo-config="async: true"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script src="js/user/modalHandler.js"></script>
 	<script src="js/utils/messages.js"></script>

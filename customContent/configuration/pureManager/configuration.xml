@@ -5,7 +5,7 @@
 		<item id="pureIP" label="IP">4444</item>
 	</topic>
 	<topic id="dspSettings" label="DSP Manager Settings">
-		<item id="dspMaster" label="Anz Master"></item>
-		<item id="dspSlaves" label="Anz Slaves"></item>
+		<item id="dspMaster" label="Anz Master">2</item>
+		<item id="dspSlaves" label="Anz Slaves">4</item>
 	</topic>
 </configuration>

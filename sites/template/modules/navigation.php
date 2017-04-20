@@ -53,9 +53,9 @@ function buildPageContent(){
     } elseif ($_SERVER['QUERY_STRING'] == "site=logout") {
         include "./sites/public/intro.php";
     } elseif ($_SERVER['QUERY_STRING'] == "site=profile") {
-        include "./sites/private/myProfile.php";
+        include "./sites/admin/myProfile.php";
     } elseif ($_SERVER['QUERY_STRING'] == "site=config") {
-        include "./sites/private/configuration.php";
+        include "./sites/admin/configuration.php";
     }
 }
 ?>
