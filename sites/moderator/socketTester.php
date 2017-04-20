@@ -2,9 +2,7 @@
 
 <!-- Msg Area -->
 <div id="showMsg" class="container" style="display: none;">
-    <div class="sixteen columns" style="text-align: center;">
-        <hr>
-    </div>
+    <div class="sixteen columns showError"></div>
 </div>
 
 <!-- Connection -->

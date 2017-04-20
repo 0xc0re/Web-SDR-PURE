@@ -46,6 +46,7 @@ function saveUser(){
 	
 	//Save user
     saveUserConfig();
+    $_SESSION["ERROR_MESSAGE"] = "";
 	$_SESSION['isNew'] = false;
 }
 

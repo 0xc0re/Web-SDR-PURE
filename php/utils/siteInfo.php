@@ -5,7 +5,7 @@ function getServer(){
 }
 
 function getSite(){
-    (string) htmlspecialchars($_SERVER["QUERY_STRING"]);
+    return (string) htmlspecialchars($_SERVER["QUERY_STRING"]);
 }
 
 function getMySite(){

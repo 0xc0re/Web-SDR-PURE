@@ -1,23 +1,25 @@
 <!-- Message Area -->
-<?php if(!isset($_SESSION['ERROR_MESSAGE']) && !empty($_SESSION['ERROR_MESSAGE'])) : ?>
-    <div class="container">
-        <div class="sixteen columns">
-            <div class="tagline">
-                Profile changed
-            </div>
-            <hr>
-        </div>
-    </div>
-<? else : ?>
+<?php if(isset($_SESSION['ERROR_MESSAGE']) && !empty($_SESSION['ERROR_MESSAGE'])) : ?>
     <div class="container">
         <div class="sixteen columns">
             <div class="tagline">
                 <p class="errorMessage">
                     <?php
-                        echo $_SESSION['ERROR_MESSAGE'];
-                        unset($_SESSION['ERROR_MESSAGE']);
+                    echo $_SESSION['ERROR_MESSAGE'];
+                    unset($_SESSION['ERROR_MESSAGE']);
                     ?>
                 </p>
+            </div>
+            <hr>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if(isset($_SESSION['ERROR_MESSAGE']) && empty($_SESSION['ERROR_MESSAGE'])) : ?>
+    <div class="container">
+        <div class="sixteen columns">
+            <div class="tagline">
+                Profile changed
             </div>
             <hr>
         </div>
