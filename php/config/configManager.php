@@ -5,6 +5,12 @@ $configXml;
 function getConfig(){
     global $configLoc;
     global $configXml;
-    $userXml = simplexml_load_file($configLoc) or die("Error: Cannot create object");
+    $userXml = loadXmlFile($configLoc);
     return $userXml;
+}
+
+function saveConfig(){
+    global $userXml;
+    global $userListLoc;
+    saveXmlFile($userListLoc, $userXml);
 }

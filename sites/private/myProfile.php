@@ -37,12 +37,10 @@
 </div>
 <?php endif; ?>
 
-
-
-
 <!-- Intro -->
 <div class="container">
-    <div class="sixteen columns">
+    <div class="two columns">&nbsp;</div>
+    <div class="twelve columns">
         <div id="" class="tagline">
 			<h1>Profile: <?php echo $_SESSION['username']?></h1>
 			<?php echo buildProfileForm() ?>
@@ -54,38 +52,19 @@
 <?php
 function buildProfileForm(){
 	$user = getUserNode($_SESSION['username']);
-	$server = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
-	$location = (string) htmlspecialchars($_SERVER["QUERY_STRING"]);
-	$action = $server ."?". $location;
-	$form = '<form class="borderlessForm" action="'.$action.'" method="post">';
-	$form .= addRow("Username", "usrname", $user->username, true);
-	$form .= addPWRow("Password", "psw1", "Your password");
-	$form .= addPWRow("Verify Pw", "psw2", "Verify your password");
-	$form .= addRow("Email", "email", $user->email, true);
-	$form .= addRow("Name", "name", $user->name, false);
-	$form .= addRow("Surname", "surname", $user->surname, false);
-	$form .= addRow("Address", "address", $user->address, false);
-	$form .= addRow("PLZ", "plz", $user->postalCode, false);
-	$form .= '<div class="eight columns">';
-	$form .= '<button type="submit" name="changeUser">Save Changes</button>';
-    $form .= '</div>';
-	$form .= '</form>';
+	$action = getMySite();
+	$form = buildFormHead($action, "post");
+	$form .= buildRow("Username", "usrname", $user->username, true);
+	$form .= buildPWRow("Password", "psw1", "Your password");
+	$form .= buildPWRow("Verify Pw", "psw2", "Verify your password");
+	$form .= buildRow("Email", "email", $user->email, true);
+	$form .= buildRow("Name", "name", $user->name, false);
+	$form .= buildRow("Surname", "surname", $user->surname, false);
+	$form .= buildRow("Address", "address", $user->address, false);
+	$form .= buildRow("PLZ", "plz", $user->postalCode, false);
+	$form .= buildSubmitButton("changeUser", "Save Changes");
+	$form .= buildEndTag();
 	return $form;
-}
-
-function addRow($label, $formId, $value, $required){
-	$row = '<div class="formLabelTable"> '.$label.': </div>';
-	//$row .= '<input class="formInputTable" type="text" name="'.$formId.'" value="'.$value.'">';
-	$row .= '<input class="formInputTable" type="text" name="'.$formId.'" value="'.$value.'" ';
-	if($required) $row .= "required";
-	$row .= '>';
-	return $row;
-}
-
-function addPWRow($label, $formId, $value){
-	$row = '<div class="formLabelTable"> '.$label.': </div>';
-	$row .= '<input class="formInputTable" type="password" placeholder="'.$value.'" name="'.$formId.'"required>';
-	return $row;
 }
 
 ?>

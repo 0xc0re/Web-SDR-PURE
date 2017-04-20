@@ -1,4 +1,10 @@
 <?php
+/* Utils */
+include "./php/utils/formBuilder.php";
+include "./php/utils/siteInfo.php";
+include "./php/utils/fileManager.php";
+
+/* Managers (Services) */
 include "./php/user/userManager.php";
 include "./php/user/loginManager.php";
 include "./php/config/configManager.php";

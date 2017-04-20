@@ -25,8 +25,10 @@
     <hr>
 </div>
 
+
 <div class="container">
-    <div class="four">
+    <div class="two columns">&nbsp;</div>
+    <div class="twelve columns">
         <div id="" class="tagline">
             <?php echo buildConfigurationForm() ?>
         </div>
@@ -40,9 +42,7 @@
 <?php
 function buildConfigurationForm(){
     $confRoot = getConfig();
-
     $content = '<form class="borderlessForm" action="" method="post">';
-
     foreach($confRoot->children() as $topic) {
         $content .= buildTopic($topic);
     }
@@ -54,31 +54,20 @@ function buildConfigurationForm(){
     return $content;
 }
 
-/*
-<topic id="pureSettings" label="PURE Manager Settings">
-		<item id="purePort" label="Port"></item>
-		<item id="pureIP" label="IP"></item>
-	</topic>
-*/
-
 function buildTopic($topic){
-    $topicContent = '<div class="container">';
-    $topicContent .= '<div class="sixteen columns">';
-    $topicContent .= '<div id="" class="tagline">';
-    $topicContent .= '<h3>'.$topic['label'].'</h3>';
+    $topicContent = '<h2>'.$topic['label'].'</h2>';
     foreach($topic->children() as $item) {
         $topicContent .= buildConfigRow($item);
     }
-    $topicContent .= '</div>';
-    $topicContent .= '</div>';
     $topicContent .= '<hr>';
-    $topicContent .= '</div>';
-
     return $topicContent;
 }
 
 function buildConfigRow($item){
-
+    $action = getMySite();
+    $row = buildFormHead($action, "post");
+    $row .= buildRow($item["label"], $item["id"], $item, true);
+    return $row;
 }
 
 ?>

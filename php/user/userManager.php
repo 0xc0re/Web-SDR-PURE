@@ -5,7 +5,7 @@ $userXml;
 function getUserNode($username){
 	global $userListLoc;
 	global $userXml;
-    $userXml = simplexml_load_file($userListLoc) or die("Error: Cannot create object");
+    $userXml = loadXmlFile($userListLoc);
     foreach($userXml->children() as $user) {
         if ($user->username == $username) return $user;
     }
@@ -45,7 +45,7 @@ function saveUser(){
 	$userToSave->postalCode = $plz;
 	
 	//Save user
-	saveChangedXML();
+    saveUserConfig();
 	$_SESSION['isNew'] = false;
 }
 
@@ -61,10 +61,10 @@ function verifyPw($pw1, $pw2){
     }
 }
 
-function saveChangedXML(){
+function saveUserConfig(){
 	global $userXml;
 	global $userListLoc;
-    $userXml->asXML($userListLoc);
+    saveXmlFile($userListLoc, $userXml);
 }
 
 
