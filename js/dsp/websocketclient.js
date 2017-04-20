@@ -24,7 +24,6 @@ function sendMessage(msg){
 var asdf = 0;
 
 function readMessage (event) {
-
     var myReader = new FileReader();
     var arrBuff;
     myReader.onload = function() {
