@@ -1,6 +1,8 @@
 
+
+
 <!-- Message Area -->
-<?php if(!isset($_SESSION['ERROR_MESSAGE'])) : ?>
+<?php if(!isset($_SESSION['ERROR_MESSAGE']) && !empty($_SESSION['ERROR_MESSAGE'])) : ?>
     <div class="container">
         <div class="sixteen columns">
             <div class="tagline">
@@ -9,14 +11,14 @@
             <hr>
         </div>
     </div>
-<? else: ?>
+<? else : ?>
     <div class="container">
         <div class="sixteen columns">
             <div class="tagline">
                 <p class="errorMessage">
                     <?php
-                    echo $_SESSION['ERROR_MESSAGE'];
-                    unset($_SESSION['ERROR_MESSAGE']);
+                        echo $_SESSION['ERROR_MESSAGE'];
+                        unset($_SESSION['ERROR_MESSAGE']);
                     ?>
                 </p>
             </div>
