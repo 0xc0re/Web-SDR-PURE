@@ -1,5 +1,5 @@
 <?php
-$userListLoc = "./customContent/userManagement/userList.xml";
+$userListLoc = "./customContent/configuration/userManagement/userList.xml";
 $xml;
 
 function getUserNode($username){
@@ -26,17 +26,14 @@ function saveUser(){
 	///Check if new username does already exist
 	if((string)$_SESSION['username'] != $username){
 		if(getUserNode($username)){
-			//ERROR Username already in use"
+            $_SESSION["ERROR_MESSAGE"] = "Username already in use";
 			return;
 		}
 	}
 
-	if(verifyPw($psw1, $psw2)){
-        $password = password_hash($psw1, PASSWORD_DEFAULT);
-    } else {
-        return;
-    }
-	
+	if(!verifyPw($psw1, $psw2))return;
+    $password = password_hash($psw1, PASSWORD_DEFAULT);
+
 	//prepare the xml-node
 	$userToSave = getUserNode($_SESSION['username']);
 	$userToSave->username = $username;
@@ -55,11 +52,9 @@ function saveUser(){
 function verifyPw($pw1, $pw2){
     //Check if both passwords are the same
     if($pw1 != $pw2){
-        //ERROR "Passwords does not match";
+        $_SESSION["ERROR_MESSAGE"] = "Passwords does not match";
         return false;
     } else {
-        //Hash the given password and delete the clear-text references
-        $password = password_hash($pw1, PASSWORD_DEFAULT);
         unset($_POST['psw1']);
         unset($_POST['psw2']);
         return true;

@@ -34,7 +34,7 @@ function listenToFormEvents(){
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_POST['login'])){
 			login();
-			if(isset($_SESSION["ERROR_MESSAGE"])){
+            if(isset($_SESSION["ERROR_MESSAGE"])){
                 redirectTo("");
             }
 		} else if(isset($_POST['logout'])){

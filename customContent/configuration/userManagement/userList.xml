@@ -14,8 +14,8 @@
 	<user>
 		<username>admin</username>
 		<defaultPassword>admin</defaultPassword>
-		<email/>
-		<password/>
+		<email>asd</email>
+		<password>$2y$10$8OB9wLrwTBfdoHkV88rxteTOt9PWoDFLH1rjkThIe/2Zbl0EV58ny</password>
 		<name>Testname</name>
 		<surname>TestSurname</surname>
 		<address>TestStrt</address>

@@ -1,7 +1,7 @@
 var exampleSocket = null;
 
 function startWebsocket(){
-    exampleSocket = new WebSocket("ws://127.0.0.1:12345", "WebSDR");
+    exampleSocket = new WebSocket("ws://127.0.0.1:12345", "binary");
     exampleSocket.onerror = connectionRefused;
     exampleSocket.onopen = connectionOpened;
 }

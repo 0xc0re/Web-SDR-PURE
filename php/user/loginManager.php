@@ -84,7 +84,7 @@ function getUserLevel(){
 }
 
 function getUserRole($username){
-	$xml = simplexml_load_file("./customContent/userManagement/userRoles.xml") or die("Error: Cannot create object");
+	$xml = simplexml_load_file("./customContent/configuration/userManagement/userRoles.xml") or die("Error: Cannot create object");
 	foreach($xml->children() as $role) {
 		foreach($role->children() as $user) {
 			if($user == $username){
