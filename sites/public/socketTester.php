@@ -3,10 +3,10 @@
 <!-- Intro -->
 <div class="container">
     <div class="sixteen columns">
-        <div id="" class="tagline">
-            <p> Test the Websocket here
-            </p>
-        </div>
+            <canvas id="water" width="800" height="400" style="border: 1px solid limegreen;background: black">
+
+
+            </canvas>
     </div>
     <hr>
 </div>
@@ -19,14 +19,20 @@
 
 <div class="container">
     <div class="four columns">&nbsp;</div>
-    <div class="eight columns">
-        <button onclick="startWebsocket();">Start Websocket</button>
+    <div class="two columns">
+        <input id="wsport" type="text" name="msg">
+    </div>
+    <div class="two columns">
+        <button onclick="connect();">Connect</button>
+    </div>
+    <div class="two columns">
+        <button onclick="disconnect();">Disconnect</button>
     </div>
     <div class="four columns">&nbsp;</div>
     <hr>
 </div>
 
-<div id="sndMsg" class="container" style="display: none;">
+<div id="sndMsg" class="container" style="">
     <div class="two columns">
         Message to send:
     </div>
