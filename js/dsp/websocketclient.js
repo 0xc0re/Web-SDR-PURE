@@ -1,11 +1,7 @@
 var exampleSocket = null;
 
 function startWebsocket(){
-<<<<<<< HEAD
-    exampleSocket = new WebSocket("ws://127.0.0.1:12345", "binary");
-=======
     exampleSocket = new WebSocket("ws://127.0.0.1:44444", "binary");
->>>>>>> d88c4abfec629975327309c95d65795a4b4b3637
     exampleSocket.onerror = connectionRefused;
     exampleSocket.onopen = connectionOpened;
 }
@@ -17,10 +13,6 @@ function sendMessage(msg){
 }
 
 function readMessage (event) {
-
-
-
-
     console.log("Server:" + event.data.size);
     var myReader = new FileReader();
     var arrBuff;
@@ -38,9 +30,6 @@ function readMessage (event) {
     });
     //start the reading process.
     myReader.readAsArrayBuffer(event.data);
-
-
-
 }
 
 function connectionOpened(){
