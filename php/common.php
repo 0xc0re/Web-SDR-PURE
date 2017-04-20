@@ -1,7 +1,7 @@
 <?php
-include "./php/pages/pageManager.php";
 include "./php/user/userManager.php";
 include "./php/user/loginManager.php";
+include "./php/config/configManager.php";
 
 initChecks();
 

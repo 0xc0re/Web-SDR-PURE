@@ -1,6 +1,3 @@
-
-
-
 <!-- Message Area -->
 <?php if(!isset($_SESSION['ERROR_MESSAGE']) && !empty($_SESSION['ERROR_MESSAGE'])) : ?>
     <div class="container">
@@ -69,7 +66,9 @@ function buildProfileForm(){
 	$form .= addRow("Surname", "surname", $user->surname, false);
 	$form .= addRow("Address", "address", $user->address, false);
 	$form .= addRow("PLZ", "plz", $user->postalCode, false);
+	$form .= '<div class="eight columns">';
 	$form .= '<button type="submit" name="changeUser">Save Changes</button>';
+    $form .= '</div>';
 	$form .= '</form>';
 	return $form;
 }

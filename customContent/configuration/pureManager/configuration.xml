@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	<topic id="pureSettings" label="PURE Manager Settings">
+		<item id="purePort" label="Port"></item>
+		<item id="pureIP" label="IP"></item>
+	</topic>
+	<topic id="dspSettings" label="DSP Manager Settings">
+		<item id="dspMaster" label="Anzahl Master"></item>
+		<item id="dspSlaves" label="Anzahl Slaves"></item>
+	</topic>
+</configuration>

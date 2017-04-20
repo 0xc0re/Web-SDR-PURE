@@ -16,11 +16,11 @@ function drawNavigation(){
         if($userLevel <= 10){ //moderator level
 
         }
-
+        */
         if($userLevel <= 1){ //admin level
-            echo(buildMenupoint("ADMIN", "site=listener"));
-            echo(buildMenupoint("UserMgmt", "site=usrMgmt"));
-        }*/
+            echo(buildMenupoint("Config", "site=config"));
+            //echo(buildMenupoint("UserMgmt", "site=usrMgmt"));
+        }
         if($userLevel <= 20){ //listener level
             echo(buildMenupoint("Channels", "site=channels"));
             echo(buildMenupoint("Sockettest", "site=socketTest"));
@@ -43,5 +43,19 @@ function setCurrent($siteLocation){
 	} else {
 		return "";
 	}
+}
+
+function buildPageContent(){
+    if ($_SERVER['QUERY_STRING'] == "") {
+        include "./sites/public/intro.php";
+    } elseif ($_SERVER['QUERY_STRING'] == "site=socketTest") {
+        include "./sites/public/socketTester.php";
+    } elseif ($_SERVER['QUERY_STRING'] == "site=logout") {
+        include "./sites/public/intro.php";
+    } elseif ($_SERVER['QUERY_STRING'] == "site=profile") {
+        include "./sites/private/myProfile.php";
+    } elseif ($_SERVER['QUERY_STRING'] == "site=config") {
+        include "./sites/private/configuration.php";
+    }
 }
 ?>

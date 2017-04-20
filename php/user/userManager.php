@@ -1,12 +1,12 @@
 <?php
 $userListLoc = "./customContent/configuration/userManagement/userList.xml";
-$xml;
+$userXml;
 
 function getUserNode($username){
 	global $userListLoc;
-	global $xml;
-    $xml = simplexml_load_file($userListLoc) or die("Error: Cannot create object");
-    foreach($xml->children() as $user) {
+	global $userXml;
+    $userXml = simplexml_load_file($userListLoc) or die("Error: Cannot create object");
+    foreach($userXml->children() as $user) {
         if ($user->username == $username) return $user;
     }
     return false;
@@ -62,9 +62,9 @@ function verifyPw($pw1, $pw2){
 }
 
 function saveChangedXML(){
-	global $xml;
+	global $userXml;
 	global $userListLoc;
-	$xml->asXML($userListLoc);
+    $userXml->asXML($userListLoc);
 }
 
 
