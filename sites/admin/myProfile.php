@@ -4,10 +4,7 @@
         <div class="sixteen columns">
             <div class="tagline">
                 <p class="errorMessage">
-                    <?php
-                    echo $_SESSION['ERROR_MESSAGE'];
-                    unset($_SESSION['ERROR_MESSAGE']);
-                    ?>
+                    <?php echo $_SESSION['ERROR_MESSAGE']; ?>
                 </p>
             </div>
             <hr>
@@ -38,6 +35,9 @@
 	</div>
 </div>
 <?php endif; ?>
+
+<!-- Clear Error Messages -->
+<?php unset($_SESSION['ERROR_MESSAGE']); ?>
 
 <!-- Intro -->
 <div class="container">
