@@ -1,11 +1,13 @@
 <script src="../../js/dsp/websocketclient.js"></script>
 
+<!-- Msg Area -->
 <div id="showMsg" class="container" style="display: none;">
     <div class="sixteen columns" style="text-align: center;">
         <hr>
     </div>
 </div>
 
+<!-- Connection -->
 <div class="container">
     <div class="tagline">
         <h2>Connect to DSP</h2>
@@ -26,22 +28,13 @@
     <hr>
 </div>
 
-<!-- Intro -->
-<div class="container">
-    <div class="one columns">&nbsp;</div>
-    <div class="fifteen columns">
-            <canvas id="water" width="800" height="400" style="border: 1px solid limegreen;background: black">
-            </canvas>
-    </div>
-    <hr>
-</div>
-
-<div id="sndMsg" class="container">
+<!-- Send Messages -->
+<div id="sndMsg" class="container" style="display: none;">
     <div class="three columns">
         <label style="margin-top: 8%;">Message to send:</label>
     </div>
     <div class="seven columns">
-        <form action="">
+        <form>
             <input id="msgBox" type="text" name="msg"><br>
         </form>
     </div>
@@ -53,4 +46,13 @@
     </div>
     <hr>
 </div>
+
+<!-- Waterfall -->
+<div id="waterfall" class="container" style="display: none;">
+    <div class="one columns">&nbsp;</div>
+    <div class="fifteen columns">
+            <canvas id="water" width="800" height="400" style="border: 1px solid limegreen;background: black">
+            </canvas>
+    </div>
+    <hr>
 </div>

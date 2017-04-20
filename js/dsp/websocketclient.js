@@ -2,7 +2,6 @@ var exampleSocket = null;
 
 function connect(){
     var port = $('#wsport').val();
-
     exampleSocket = new WebSocket("ws://127.0.0.1:" + port, "binary");
     exampleSocket.onerror = connectionRefused;
     exampleSocket.onopen = connectionOpened;
@@ -11,6 +10,8 @@ function connect(){
 function disconnect(){
     exampleSocket.onmessage = null;
     exampleSocket = null;
+    document.getElementById("sndMsg").style.display = "none";
+    document.getElementById("waterfall").style.display = "none";
 }
 
 function sendMessage(msg){
@@ -47,7 +48,8 @@ function readMessage (event) {
 function connectionOpened(){
     exampleSocket.onmessage = readMessage;
     document.getElementById("sndMsg").style.display = "";
-    showMsg("Connection established");
+    document.getElementById("waterfall").style.display = "";
+    //showMsg("Connection established");
 }
 
 function connectionRefused(){
