@@ -24,3 +24,10 @@ function buildSubmitButton($name, $label){
 function buildEndTag(){
     return '</form>';
 }
+
+function buildH3Form($value){
+    return '<h3 class="formHeading3">'.$value.'</h3>';
+}
+
+
+

@@ -43,8 +43,8 @@
     <div class="twelve columns">
         <div id="" class="tagline">
 			<h1>Profile: <?php echo $_SESSION['username']?></h1>
-			<?php echo buildProfileForm() ?>
         </div>
+        <?php echo buildProfileForm() ?>
     </div>
     <hr>
 </div>

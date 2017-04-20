@@ -17,45 +17,33 @@
 
 <!-- Intro -->
 <div class="container">
-    <div class="sixteen columns">
-        <div id="" class="tagline">
-			<h1>Server Configuration</h1>
-        </div>
-    </div>
-    <hr>
-</div>
-
-
-<div class="container">
     <div class="two columns">&nbsp;</div>
     <div class="twelve columns">
         <div id="" class="tagline">
-            <?php echo buildConfigurationForm() ?>
+            <h1>Server Configuration</h1>
         </div>
+        <?php echo buildConfigurationForm() ?>
     </div>
     <hr>
 </div>
-
-
 
 
 <?php
 function buildConfigurationForm(){
     $confRoot = getConfig();
-    $content = '<form class="borderlessForm" action="" method="post">';
+    $action = getMySite();
+    $content = buildFormHead($action, "post");
     foreach($confRoot->children() as $topic) {
         $content .= buildTopic($topic);
     }
-
     $content .= '<button type=\"submit\" name=\"changeUser\">Save Changes</button>';
     $content .= '</form>';
 
-    //Add Save button
     return $content;
 }
 
 function buildTopic($topic){
-    $topicContent = '<h2>'.$topic['label'].'</h2>';
+    $topicContent = buildH3Form($topic['label']);
     foreach($topic->children() as $item) {
         $topicContent .= buildConfigRow($item);
     }

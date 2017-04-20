@@ -1,3 +1,6 @@
 ./customContent/userManagement/userList.xml
 ./customContent/userManagement/userRoles.xml
-customContent/userManagement/userList.xml
+./depts/*
+deps/dojox/gantt/GanttChart.js.uncompressed.js
+deps/
+.idea/needsmoredojoconfig.xml

@@ -1,4 +1,5 @@
 .formLabelTable { width:20%; float:left; padding-top:10px; }
 .formInputTable { width:80% !important; }
 .borderlessForm { border:none; }
+.formHeading3 { text-align: center; }
 .errorMessage { color: red; }
