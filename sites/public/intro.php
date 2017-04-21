@@ -1,6 +1,6 @@
 <!-- Welcome intro -->
 <?PHP
-include "./customContent/content/welcome.php";
+include( dirname(__FILE__) . "/../../customContent/content/welcome.php");
 ?>
 
 <?php if(isset($_SESSION['ERROR_MESSAGE'])) : ?>

@@ -1,13 +1,13 @@
 <?php
 /* Utils */
-include "./php/utils/formBuilder.php";
-include "./php/utils/siteInfo.php";
-include "./php/utils/fileManager.php";
+include( dirname(__FILE__) . "/utils/formBuilder.php");
+include( dirname(__FILE__) . "/utils/siteInfo.php");
+include( dirname(__FILE__) . "/utils/fileManager.php");
 
 /* Managers (Services) */
-include "./php/user/userManager.php";
-include "./php/user/loginManager.php";
-include "./php/config/configManager.php";
+include( dirname(__FILE__) . "/user/userManager.php");
+include( dirname(__FILE__) . "/user/loginManager.php");
+include( dirname(__FILE__) . "/config/configManager.php");
 
 initChecks();
 
@@ -45,9 +45,14 @@ function listenToFormEvents(){
             }
 		} else if(isset($_POST['logout'])){
 			logout();
+			unset($_POST['logout']);
 		} else if(isset($_POST['changeUser'])){
 			saveUser();
-		}
+            unset($_POST['changeUser']);
+		} else if(isset($_POST['changeConfig'])){
+            saveConfiguration();
+            unset($_POST['changeConfig']);
+        }
 	}
 }
 

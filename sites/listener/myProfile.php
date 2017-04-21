@@ -68,5 +68,4 @@ function buildProfileForm(){
 	$form .= buildEndTag();
 	return $form;
 }
-
 ?>

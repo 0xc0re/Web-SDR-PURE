@@ -1,4 +1,13 @@
-<script src="../../js/dsp/websocketclient.js"></script>
+<script src="../../js/websockets/websocketclient.js"></script>
+<script src="../../js/jsCascade/jsCascade.js"></script>
+
+<script>
+    //drawCanvas();
+    function sendMessageToSocket(){
+        var message = document.getElementById('msgBox');
+        sendMessage(message.value)
+    }
+</script>
 
 <!-- Msg Area -->
 <div id="showMsg" class="container" style="display: none;">
@@ -35,10 +44,7 @@
         <input id="msgBox" type="text" name="msg"><br>
     </div>
     <div class="six columns">
-        <button onclick="
-        var message = document.getElementById('msgBox');
-        sendMessage(message.value);
-        ">Send message</button>
+        <button onclick="sendMessageToSocket()">Send message</button>
     </div>
     <hr>
 </div>

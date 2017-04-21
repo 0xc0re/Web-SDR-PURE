@@ -1,5 +1,6 @@
 <?php
-$userListLoc = "./customContent/configuration/userManagement/userList.xml";
+
+$userListLoc = ( dirname(__FILE__) . "/../../customContent/configuration/userManagement/userList.xml");
 $userXml;
 
 function getUserNode($username){

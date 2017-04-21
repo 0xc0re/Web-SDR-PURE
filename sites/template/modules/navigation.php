@@ -47,15 +47,15 @@ function setCurrent($siteLocation){
 
 function buildPageContent(){
     if ($_SERVER['QUERY_STRING'] == "") {
-        include "./sites/public/intro.php";
+        include( dirname(__FILE__) . "/../../public/intro.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=socketTest") {
-        include "./sites/moderator/socketTester.php";
+        include( dirname(__FILE__) . "/../../moderator/socketTester.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=logout") {
-        include "./sites/public/intro.php";
+        include( dirname(__FILE__) . "/../../public/intro.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=profile") {
-        include "./sites/admin/myProfile.php";
+        include(dirname(__FILE__) . "/../../listener/myProfile.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=config") {
-        include "./sites/admin/configuration.php";
+        include( dirname(__FILE__) . "/../../admin/configuration.php");
     }
 }
 ?>
