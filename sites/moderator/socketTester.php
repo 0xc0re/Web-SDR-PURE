@@ -2,7 +2,6 @@
 <script src="../../js/jsCascade/jsCascade.js"></script>
 
 <script>
-    //drawCanvas();
     function sendMessageToSocket(){
         var message = document.getElementById('msgBox');
         sendMessage(message.value)
@@ -19,17 +18,11 @@
     <div class="tagline">
         <h2>Connect to DSP</h2>
     </div>
-    <div class="five columns">&nbsp;</div>
-    <div class="one columns">
-        <label style="margin-top: 45%;">Port:</label>
-    </div>
-    <div class="two columns">
-        <input id="wsport" type="text" name="msg">
-    </div>
-    <div class="two columns">
+    <div class="four columns">&nbsp;</div>
+    <div class="four columns">
         <button onclick="connect();">Connect</button>
     </div>
-    <div class="two columns">
+    <div class="four columns">
         <button onclick="disconnect();">Disconnect</button>
     </div>
     <hr>

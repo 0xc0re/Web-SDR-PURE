@@ -1,19 +1,23 @@
 var dspWebsocket = null;
 
 function connect(){
-    $.ajax({url: "../../php/ajax/getDspIp.php", success: function(result){
-        var item = JSON.parse(result);
-        $("#wsport")[0].value = item[0][0];
-    }});
+    $.ajax({
+        url: "../../php/ajax/dataAccessor.php",
+        data:"function=getManagerLocation",
+        success: function(result){
+            startWebsocket(result);
+        },
+        error: function(result){
+            showMsg("PURE Manager location not found");
+        }
+    });
+}
 
-
-    /*
-    var port = $('#wsport').val();
-    dspWebsocket = new WebSocket("ws://127.0.0.1:" + port, "binary");
-    // dspWebsocket.onerror = connectionRefused;
-    dspWebsocket.onerror = connectionOpened;
+function startWebsocket($location){
+    dspWebsocket = new WebSocket($location, "binary");
+    dspWebsocket.onerror = connectionRefused;
+    //dspWebsocket.onerror = connectionOpened;
     dspWebsocket.onopen = connectionOpened;
-    */
 }
 
 function disconnect(){

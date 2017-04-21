@@ -9,15 +9,20 @@ if(isset($_GET['function'])) {
 }
 
 function getManagerLocation(){
-    $ip = getDspIp();
-    var_dump($ip);
-    //echo (String) $ip;
-    //echo json_encode($result);
+    $ip = getManagerIp();
+    $port = getManagerPort();
+    echo $ip .':'. $port;
 }
 
-function getDspIp(){
+function getManagerIp(){
     $config = getConfig();
     $result = $config->xpath('//item[@id="pureIP"]');
-    return $result;
+    return $result[0];
+}
+
+function getManagerPort(){
+    $config = getConfig();
+    $result = $config->xpath('//item[@id="purePort"]');
+    return $result[0];
 }
 
