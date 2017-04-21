@@ -13,8 +13,8 @@ function connect(){
     });
 }
 
-function startWebsocket($location){
-    dspWebsocket = new WebSocket($location, "binary");
+function startWebsocket(location){
+    dspWebsocket = new WebSocket(location, "binary");
     dspWebsocket.onerror = connectionRefused;
     dspWebsocket.onopen = connectionOpened;
 }
