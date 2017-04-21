@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <?PHP
 session_start();
-include( dirname(__FILE__) . './sites/template/pageSetup.php');
+include( dirname(__FILE__) . '/sites/template/pageSetup.php');
 ?>
 
 <body class="wrap">
@@ -13,12 +13,12 @@ include( dirname(__FILE__) . './sites/template/pageSetup.php');
 ================================================== -->
 <!-- phplogic -->
 <?PHP
-include( dirname(__FILE__) . './php/common.php');
+include( dirname(__FILE__) . '/php/common.php');
 ?>
 
 <!-- Header -->
 <?PHP
-include( dirname(__FILE__) . './sites/template/header.php');
+include( dirname(__FILE__) . '/sites/template/header.php');
 ?>
 
 <!-- Content -->
@@ -28,7 +28,7 @@ include( dirname(__FILE__) . './sites/template/header.php');
 
 <!-- Footer -->
 <?PHP
-include( dirname(__FILE__) . './sites/template/footer.php');
+include( dirname(__FILE__) . '/sites/template/footer.php');
 ?>
 </body>
 </html>

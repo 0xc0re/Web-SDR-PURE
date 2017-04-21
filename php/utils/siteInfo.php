@@ -1,5 +1,4 @@
 <?php
-
 function getServer(){
     return (string) htmlspecialchars($_SERVER["PHP_SELF"]);
 }
