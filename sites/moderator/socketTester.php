@@ -32,9 +32,7 @@
         <label style="margin-top: 8%;">Message to send:</label>
     </div>
     <div class="seven columns">
-        <form>
-            <input id="msgBox" type="text" name="msg"><br>
-        </form>
+        <input id="msgBox" type="text" name="msg"><br>
     </div>
     <div class="six columns">
         <button onclick="
@@ -49,7 +47,7 @@
 <div id="waterfall" class="container" style="display: none;">
     <div class="one columns">&nbsp;</div>
     <div class="fifteen columns">
-            <canvas id="water" width="800" height="400" style="border: 1px solid limegreen;background: black">
+            <canvas id="jsCascade" width="800" height="400" style="border: 1px solid limegreen;background: black">
             </canvas>
     </div>
     <hr>
