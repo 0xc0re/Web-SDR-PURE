@@ -16,17 +16,16 @@ function connect(){
 function startWebsocket($location){
     dspWebsocket = new WebSocket($location, "binary");
     dspWebsocket.onerror = connectionRefused;
-    //dspWebsocket.onerror = connectionOpened;
     dspWebsocket.onopen = connectionOpened;
 }
 
 function disconnect(){
     dspWebsocket.onmessage = null;
     dspWebsocket = null;
-    document.getElementById("sndMsg").style.display = "none";
-    document.getElementById("waterfall").style.display = "none";
+    hideWaterfall();
 }
 
+//This is the DSP Part. Manager doesnt need 64
 function sendMessage(msg){
     if(dspWebsocket){
         while(msg.length < 64)
@@ -35,27 +34,55 @@ function sendMessage(msg){
     }
 }
 
-function readDspData (event) {
+function readInitialData (event) {
     var myReader = new FileReader();
-    var arrBuff;
-    myReader.onload = processDspData;
-
+    myReader.onload = processInitialData;
     //start the reading process.
     myReader.readAsArrayBuffer(event.data);
 }
 
+function processInitialData (){
+    //s;dsp started;50000
+    console.log(this.result);
+    /*
+    var arrBuff;
+    arrBuff = this.result;
+    var i8Arr = new Uint8Array(arrBuff);
+    console.log(i8Arr);
+    */
+}
+
+function readDspData (event) {
+    var myReader = new FileReader();
+    myReader.onload = processDspData;
+    //start the reading process.
+    myReader.readAsArrayBuffer(event.data);
+}
+
+var preCounter = 0;
 function processDspData() {
+    var arrBuff;
     arrBuff = this.result;
     var i8Arr = new Uint8Array(arrBuff);
 
-    if (asdf > 5)
+    if (preCounter > 5)
         processSpectrumData(i8Arr);
 }
 
 function connectionOpened(){
-    dspWebsocket.onmessage = readDspData;
+    dspWebsocket.onmessage = readInitialData;
+    sendMessage("startChannel(0)");
+    showWaterfall();
+}
+
+function showWaterfall(){
     document.getElementById("sndMsg").style.display = "";
     document.getElementById("waterfall").style.display = "";
+}
+
+function hideWaterfall(){
+    document.getElementById("sndMsg").style.display = "none";
+    document.getElementById("waterfall").style.display = "none";
 }
 
 function connectionRefused(){
