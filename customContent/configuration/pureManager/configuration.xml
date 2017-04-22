@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
 	<topic id="pureSettings" label="PURE Manager Settings">
-		<item id="purePort" label="Port">ws://127.0.0.1</item>
-		<item id="pureIP" label="IP">4444</item>
+		<item id="purePort" label="Port">44444</item>
+		<item id="pureIP" label="IP">ws://127.0.0.1</item>
 		<item id="pureSample" label="Samp.Rate">48000</item>
 	</topic>
 	<topic id="dspSettings" label="DSP Manager Settings">
