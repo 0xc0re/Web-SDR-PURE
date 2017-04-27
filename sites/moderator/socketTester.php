@@ -1,12 +1,5 @@
-<script src="../../js/websockets/websocketclient.js"></script>
-<script src="../../js/jsCascade/jsCascade.js"></script>
-
-<script>
-    function sendMessageToSocket(){
-        var message = document.getElementById('msgBox');
-        sendMessage(message.value)
-    }
-</script>
+<!-- Test -->
+<script src="../../js/sites/socketTester.js"></script>
 
 <!-- Msg Area -->
 <div id="showMsg" class="container" style="display: none;">
@@ -20,10 +13,10 @@
     </div>
     <div class="four columns">&nbsp;</div>
     <div class="four columns">
-        <button onclick="connect();">Connect</button>
+        <button id="connectButton">Connect</button>
     </div>
     <div class="four columns">
-        <button onclick="disconnect();">Disconnect</button>
+        <button id="disconnectButton">Disconnect</button>
     </div>
     <hr>
 </div>
@@ -37,7 +30,7 @@
         <input id="msgBox" type="text" name="msg"><br>
     </div>
     <div class="six columns">
-        <button onclick="sendMessageToSocket()">Send message</button>
+        <button id="messageSender">Send message</button>
     </div>
     <hr>
 </div>

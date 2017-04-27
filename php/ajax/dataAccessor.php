@@ -2,27 +2,24 @@
 include( dirname(__FILE__) . "/../common.php");
 
 /** MAIN **/
-if(isset($_GET['function'])) {
-    if($_GET['function'] == 'getManagerLocation') {
-        getManagerLocation();
-    }
-}
+call_user_func((string)$_GET['function']);
 
 function getManagerLocation(){
-    $ip = getManagerIp();
-    $port = getManagerPort();
+    $config = getConfig();
+    $ip = $config->xpath('//item[@id="pureIP"]');
+    $port = $config->xpath('//item[@id="purePort"]');
     echo $ip .':'. $port;
 }
 
 function getManagerIp(){
     $config = getConfig();
     $result = $config->xpath('//item[@id="pureIP"]');
-    return $result[0];
+    echo (string) $result[0];
 }
 
 function getManagerPort(){
     $config = getConfig();
     $result = $config->xpath('//item[@id="purePort"]');
-    return $result[0];
+    echo (string) $result[0];
 }
 
