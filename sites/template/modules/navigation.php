@@ -14,15 +14,15 @@ function drawNavigation(){
 		$userLevel = getUserLevel();
         /*
         if($userLevel <= 10){ //moderator level
-
         }
         */
         if($userLevel <= 1){ //admin level
             echo(buildMenupoint("Config", "site=config"));
             //echo(buildMenupoint("UserMgmt", "site=usrMgmt"));
         }
-        if($userLevel <= 20){ //listener level
+        if($userLevel <= 20){ //private level
             echo(buildMenupoint("Channels", "site=channels"));
+            echo(buildMenupoint("SDR", "site=sdr"));
             echo(buildMenupoint("Sockettest", "site=socketTest"));
             echo(buildMenupoint("My Profile", "site=profile"));
             echo(buildMenupoint("Logout", "site=logout"));
@@ -49,13 +49,17 @@ function buildPageContent(){
     if ($_SERVER['QUERY_STRING'] == "") {
         include( dirname(__FILE__) . "/../../public/intro.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=socketTest") {
-        include( dirname(__FILE__) . "/../../moderator/socketTester.php");
+        include(dirname(__FILE__) . "/../../private/socketTester.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=logout") {
         include( dirname(__FILE__) . "/../../public/intro.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=profile") {
-        include(dirname(__FILE__) . "/../../listener/myProfile.php");
+        include(dirname(__FILE__) . "/../../private/myProfile.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=config") {
         include( dirname(__FILE__) . "/../../admin/configuration.php");
+    } elseif ($_SERVER['QUERY_STRING'] == "site=sdr") {
+        include(dirname(__FILE__) . "/../../private/sdr.php");
+    } elseif ($_SERVER['QUERY_STRING'] == "site=channels") {
+        include( dirname(__FILE__) . "/../../private/channels.php");
     }
 }
 ?>

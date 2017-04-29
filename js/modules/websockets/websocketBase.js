@@ -12,6 +12,8 @@ define([
 
         startWebsocket: function (location, mode) {
             if(!mode) mode = "binary";
+            console.log("lovatio", location);
+            console.log("mode", mode);
             dspWebsocket = new WebSocket(location, mode);
             dspWebsocket.onerror = lang.hitch(this, this.errorBehaviour);
             dspWebsocket.onopen = lang.hitch(this, this.connectionOpened);
@@ -19,17 +21,15 @@ define([
         },
 
         disconnectWebsocket: function () {
+            this.transmitMessage("disconnect()");
+
             //dspWebsocket.onmessage = null;
-            dspWebsocket.close();
-            dspWebsocket = null;
+            //dspWebsocket.close();
+            //dspWebsocket = null;
         },
 
         transmitMessage: function(msg){
-            if(dspWebsocket){
-                while(msg.length < 64)
-                    msg += "\0";
-                dspeWbsocket.send(msg);
-            }
+            dspWebsocket.send(msg);
         },
 
         errorBehaviour: function(param){

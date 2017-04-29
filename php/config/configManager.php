@@ -25,3 +25,22 @@ function saveConfiguration(){
     }
     setConfig();
 }
+
+function getManagerLocation(){
+    $config = getConfig();
+    $ip = $config->xpath('//item[@id="pureIP"]');
+    $port = $config->xpath('//item[@id="purePort"]');
+    return $ip .':'. $port;
+}
+
+function getManagerIp(){
+    $config = getConfig();
+    $result = $config->xpath('//item[@id="pureIP"]');
+    return (string) $result[0];
+}
+
+function getManagerPort(){
+    $config = getConfig();
+    $result = $config->xpath('//item[@id="purePort"]');
+    return (string) $result[0];
+}

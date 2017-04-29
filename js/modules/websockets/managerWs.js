@@ -9,22 +9,29 @@ define([
         },
 
         /** Override - What should happen if the transaction is completed **/
-        transactionCompleted: function(portNr){
+        transactionCompleted: function(param){
         },
 
         connectionOpened: function () {
-            this.onmessage = readInitialData;
+            this.onmessage = this.readInitialData;
+            this.transactionCompleted();
         },
 
         readInitialData: function (event) {
+            console.log("readInitialData");
+            console.log(event);
             var myReader = new FileReader();
             myReader.onload = processInitialData;
-            myReader.readAsText(event.data);
+            myReader.readAsText(event.data); //TODO maybe hitch this
         },
 
         processInitialData: function (event) {
+            console.log("processInitialData");
+            console.log(event);
             var response = JSON.parse(this.result);
             response.success = response.state == "s" ? true : false;
+
+            /*
             if(response.success) {
                 transactionCompleted(response.port);
             } else {
@@ -32,6 +39,7 @@ define([
                 //connectionRefused();
                 //disconnectManager();
             }
+            */
         },
     });
 });

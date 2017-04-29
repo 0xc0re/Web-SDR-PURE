@@ -4,3 +4,6 @@
 deps/dojox/gantt/GanttChart.js.uncompressed.js
 deps/
 .idea/needsmoredojoconfig.xml
+customContent/configuration/pureManager/configuration.xml
+customContent/configuration/userManagement/userList.xml
+customContent/configuration/userManagement/userRoles.xml

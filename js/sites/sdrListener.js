@@ -4,42 +4,35 @@ require([
     "dojo/_base/lang",
     "dojo/DeferredList",
     "dojo/_base/Deferred",
-    "modules/websockets/managerWs",
+    "modules/websockets/dspWs",
     "modules/utils/messageDisplayer",
     "dojo/domReady!",
-], function (dom, on, lang, DeferredList, Deferred, managerWebsocket, messageDisplayer) {
+], function (dom, on, lang, DeferredList, Deferred, dspWebsocket, messageDisplayer) {
     ip = null;
     port = null;
 
     // Site Logic
     prepareVars();
-    initializeSocketTester();
+    initiateConnection();
 
     function prepareVars(){
         initializeWebsocket();
-        managerSocket = new managerWebsocket();
-        managerSocket.transactionErroreous = lang.hitch(this, showErrorMessage);
         htmlLogger = new messageDisplayer();
     }
 
     function initializeWebsocket(){
+        dspSocket = new dspWebsocket();
+        dspSocket.transactionErroreous = lang.hitch(this, showErrorMessage);
         window.onbeforeunload = function() {
-            console.log(managerSocket);
-            managerSocket.disconnectWebsocket();
-            return "Hello mister";
+            dspSocket.disconnectWebsocket();
+            return "";
         };
     }
 
-    function initializeSocketTester(){
-        on(dom.byId("connectButton"), "click", receiveServerLocation);
-        on(dom.byId("disconnectButton"), "click", lang.hitch(managerSocket, managerSocket.disconnectWebsocket)); //disconnectManager
-        // on(dom.byId("messageSender"), "click", startWSHandshake); //sendMessageToSocket()
-    }
-
-    function receiveServerLocation(){
+    function initiateConnection(){
         var deferreds = [];
-        deferreds.push(getAjaxData("getManagerIp", lang.hitch(this, setIp), showErrorMessage));
-        deferreds.push(getAjaxData("getManagerPort", lang.hitch(this, setPort), showErrorMessage));
+        deferreds.push(getAjaxData("showManagerIp", lang.hitch(this, setIp), showErrorMessage));
+        deferreds.push(getAjaxData("showDspPort", lang.hitch(this, setPort), showErrorMessage));
 
         var defList = new DeferredList(deferreds);
         defList.then(function(result){
@@ -49,25 +42,27 @@ require([
 
     function startWSHandshake(){
         var location = buildServerLocation();
-        managerSocket.transactionCompleted = lang.hitch(this, finishedWSHandshake);
-        managerSocket.startWebsocket(location);
+        dspSocket.transactionCompleted = lang.hitch(this, finishedWSHandshake);
+        dspSocket.startWebsocket(location);
     }
 
     function finishedWSHandshake(){
-        console.log("finishedWSHandshake");
-        managerSocket.transmitMessage("startChannel(0)");
+        dspSocket.transmitMessage("setFPS 512 10");
+
+
+        //dspSocket.transmitMessage("startChannel(0)");
 
         /*
-        readInitialData();
-        managerSocket.messageReceived = lang.hitch(this, readInitialData);
-        showWaterfall();
-        */
+         readInitialData();
+         managerSocket.messageReceived = lang.hitch(this, readInitialData);
+         showWaterfall();
+         */
 
         /*
-        setPort(port);
-        managerSocket.disconnectWebsocket();
-        startModerator();
-        */
+         setPort(port);
+         managerSocket.disconnectWebsocket();
+         startModerator();
+         */
     }
 
     function readInitialData (event) {
@@ -103,9 +98,9 @@ require([
     function startModerator(){
         var location = buildServerLocation();
         // managerSocket.transactionCompleted = lang.hitch(this, finishedWSHandshake);
-        managerSocket.startWebsocket(location);
+        dspSocket.startWebsocket(location);
 
-        managerSocket.messageReceived = function(result){
+        dspSocket.messageReceived = function(result){
 
         }
     }

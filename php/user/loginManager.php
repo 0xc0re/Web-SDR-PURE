@@ -1,5 +1,9 @@
 <?php
-// define variables and set to empty values
+$configLoc = ( dirname(__FILE__) . "/../../customContent/configuration/userManagement/userRoles.xml");
+if(!isset($xml)){
+    $xml = loadXmlFile($configLoc);
+}
+
 $username = $password = "";
 $userLevel = 100;
 setUserLevel();
@@ -10,7 +14,6 @@ function logout(){
     unsetSessionIfSet('valid');
     unsetSessionIfSet('timeout');
     unsetSessionIfSet('username');
-    unsetSessionIfSet('userrole');
     unsetSessionIfSet('isNew');
 }
 
@@ -54,28 +57,26 @@ function checkPw($user){
 
 function startSession($username, $isNew){
     if(session_id()) logout();
-	$userRole = getUserRole($username);
 	$_SESSION['valid'] = true;
 	$_SESSION['timeout'] = time();
 	$_SESSION['username'] = $username;
-	$_SESSION['userrole'] = $userRole;
 	$_SESSION['isNew'] = $isNew;
 }
 
 function setUserLevel(){
 	global $userLevel;
-	if(isset($_SESSION['userrole'] )){
-		$role = $_SESSION['userrole'];
-		if($role == "adminstrator"){
-			$userLevel = 1;
-		} else if($role == "moderator"){
-			$userLevel = 10;
-		} else if($role == "listener"){
-			$userLevel = 20;
-		} else {
-			$userLevel = 100;
-		}
-	}
+    if(isset($_SESSION['username'])){
+        $role = getUserRole($_SESSION['username']);
+        if($role == "adminstrator"){
+            $userLevel = 1;
+        } else if($role == "moderator"){
+            $userLevel = 10;
+        } else if($role == "listener"){
+            $userLevel = 20;
+        } else {
+            $userLevel = 100;
+        }
+    }
 }
 
 function getUserLevel(){
@@ -84,7 +85,7 @@ function getUserLevel(){
 }
 
 function getUserRole($username){
-	$xml = simplexml_load_file("./customContent/configuration/userManagement/userRoles.xml") or die("Error: Cannot create object");
+    global $xml;
 	foreach($xml->children() as $role) {
 		foreach($role->children() as $user) {
 			if($user == $username){
@@ -96,7 +97,7 @@ function getUserRole($username){
 }
 
 function isUserLoggedIn(){
-	if(isset($_SESSION['valid']) && isset($_SESSION['username']) && isset($_SESSION['userrole'])) {
+	if(isset($_SESSION['valid']) && isset($_SESSION['username'])) {
 		return true;
 	} else {
 		return false;

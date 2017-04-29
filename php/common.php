@@ -3,6 +3,7 @@
 include( dirname(__FILE__) . "/utils/formBuilder.php");
 include( dirname(__FILE__) . "/utils/siteInfo.php");
 include( dirname(__FILE__) . "/utils/fileManager.php");
+include( dirname(__FILE__) . "/utils/socket.php");
 
 /* Managers (Services) */
 include( dirname(__FILE__) . "/user/userManager.php");
