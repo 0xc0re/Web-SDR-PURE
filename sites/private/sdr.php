@@ -26,13 +26,14 @@ includeScripts();
 
 function includeScripts(){
     $userLevel = getUserLevel();
-    if($userLevel <= 1){
-//Insert admin script
-    } elseif($userLevel <= 10){
-//Insert moderator script
-    } elseif($userLevel <= 20){
-        echo '<script src="../../js/sites/sdrListener.js"></script>';
-    }
+    echo '<script src="../../js/sites/sdrListener.js"></script>';
+//    if($userLevel <= 1){
+////Insert admin script
+//    } elseif($userLevel <= 10){
+////Insert moderator script
+//    } elseif($userLevel <= 20){
+//        echo '<script src="../../js/sites/sdrListener.js"></script>';
+//    }
 }
 
 function handleSdrState(){
