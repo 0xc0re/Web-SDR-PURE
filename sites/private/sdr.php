@@ -3,18 +3,35 @@
     <div class="sixteen columns showError"></div>
 </div>
 
+<!-- Waterfall -->
+<div id="waterfall" class="container" style="display: ;">
+    <div class="one columns">&nbsp;</div>
+    <div class="fifteen columns">
+        <div id="cascadeContainer"></div>
+    </div>
+    <hr>
+</div>
+
+<!-- Waterfall -->
+<div class="container" style="display: ;">
+    <div class="sixteen columns">
+        <button id="button">SEND DATA</button>
+    </div>
+    <hr>
+</div>
+
 <?php
 includeScripts();
-handleSdrState();
+//handleSdrState(); //TODO Reactivate
 
 function includeScripts(){
     $userLevel = getUserLevel();
-    if($userLevel <= 20){
+    if($userLevel <= 1){
+//Insert admin script
+    } elseif($userLevel <= 10){
+//Insert moderator script
+    } elseif($userLevel <= 20){
         echo '<script src="../../js/sites/sdrListener.js"></script>';
-    } elseif($userLevel <= 10) {
-    //Insert moderator script
-    } elseif($userLevel <= 1){
-    //Insert admin script
     }
 }
 

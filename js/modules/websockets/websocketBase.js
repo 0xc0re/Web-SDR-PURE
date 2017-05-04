@@ -12,8 +12,6 @@ define([
 
         startWebsocket: function (location, mode) {
             if(!mode) mode = "binary";
-            console.log("lovatio", location);
-            console.log("mode", mode);
             dspWebsocket = new WebSocket(location, mode);
             dspWebsocket.onerror = lang.hitch(this, this.errorBehaviour);
             dspWebsocket.onopen = lang.hitch(this, this.connectionOpened);

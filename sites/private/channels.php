@@ -19,10 +19,10 @@ function connectToManager(){
     $host = getManagerIp();
     $port = getManagerPort();
 
-    $result = sendMessageToSocket($host, $port, $message);
+    //$result = sendMessageToSocket($host, $port, $message);
 
     //Test data
-//    $result = '[{"freq":"24800000","state":"free"},{"freq":"24800000","state":"free"}]';
+    $result = '[{"freq":"24800000","state":"free"},{"freq":"24800000","state":"free"}]';
 
     //Decode JSON String
     $channelArray = json_decode($result);
@@ -82,7 +82,6 @@ function buildUserContent($channelNr) {
     $userContent = "";
     $userLevel = getUserLevel();
     if($userLevel <= 20){
-        //$userContent .= '<td><button>Listen</button></td>';
         $userContent .= '<td>'.$form.$button.'</form></td>';
     }
     if($userLevel <= 10) {

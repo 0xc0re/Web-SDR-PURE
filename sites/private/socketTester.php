@@ -40,7 +40,7 @@
     <div class="one columns">&nbsp;</div>
     <div class="fifteen columns">
             <canvas id="jsCascade" width="800" height="400" style="border: 1px solid limegreen;background: black">
-            </canvas>
+        </canvas>
     </div>
     <hr>
 </div>
