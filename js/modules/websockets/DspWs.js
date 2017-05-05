@@ -12,24 +12,29 @@ define([
         transactionCompleted: function(param){
         },
 
+        /** Override - outputs spectral data **/
+        handleSpectralData: function(){
+        },
+
+        /** Override - outputs audio data **/
+        handleAudioData: function(){
+        },
+
         connectionOpened: function () {
             console.log("connectionOpened");
-            // this.onmessage = this.readData;
             this.transactionCompleted();
         },
 
-        // readData: function (event) {
         messageReceived: function (event) {
-            console.log("messageReceived");
-            console.log(event);
             var myReader = new FileReader();
             myReader.onload = this.processData;
-            myReader.arraybuffer(event.data);
+            myReader.readAsArrayBuffer(event.data);
         },
 
-        processData: function (event) {
+        processData: function (result) {
             console.log("processData");
-            console.log(event);
+            console.log(result);
+            console.log(result[0]);
             // response.success = response.state == "s" ? true : false;
 
             /*

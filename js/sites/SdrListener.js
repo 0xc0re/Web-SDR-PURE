@@ -90,7 +90,11 @@ require([
     function finishedWSHandshake(){
         var message = "setFPS "+this.SAMPLE_WIDTH+" "+this.SAMPLE_SPEED;
         this.dspSocket.transmitMessage(message);
-        managerSocket.messageReceived = lang.hitch(this, readDspData);
+
+        this.dspSocket
+        this.dspSocket
+
+        //this.dspSocket.messageReceived = lang.hitch(this, readDspData);
     }
 
     function readDspData (event) {
