@@ -18,7 +18,6 @@
 </div>
 
 <?php
-var_dump($_POST);
 includeScripts();
 //handleSdrState(); //TODO Reactivate
 
