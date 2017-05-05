@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="stylesheets/template/messages.css">
     <link rel="stylesheet" href="stylesheets/login/modalLoginLayout.css">
     <link rel="stylesheet" href="stylesheets/login/loginLayout.css">
+    <link rel="stylesheet" href="js/dijit/themes/claro/claro.css">
 
     <!-- Javascript
   ================================================== -->

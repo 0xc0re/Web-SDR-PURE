@@ -3,17 +3,14 @@
     <div class="sixteen columns showError"></div>
 </div>
 
-<!-- Waterfall -->
-<div id="waterfall" class="container" style="display: ;">
-    <div class="one columns">&nbsp;</div>
-    <div class="fifteen columns">
-        <div id="cascadeContainer"></div>
+<!-- Web Radio -->
+<div class="container">
+    <div class="sixteen columns">
+        <div id="sdrPure"></div>
     </div>
-    <hr>
 </div>
 
-<!-- Waterfall -->
-<div class="container" style="display: ;">
+<div class="container">
     <div class="sixteen columns">
         <button id="button">SEND DATA</button>
     </div>

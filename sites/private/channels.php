@@ -77,6 +77,7 @@ function buildUserContent($channelNr) {
     $action= getServer();
     $action .= "?site=sdr";
     $form = "<form class='borderlessForm' action='".$action."' method='post'>";
+    //Add hidden field with middle freq
     $button = '<button type="submit" value="'.$channelNr.'" name="listenChannel">Listen</button>';
 
     $userContent = "";

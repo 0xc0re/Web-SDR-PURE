@@ -8,7 +8,7 @@ session_start();
 include( dirname(__FILE__) . '/sites/template/pageSetup.php');
 ?>
 
-<body class="wrap">
+<body class="wrap claro">
 <!-- Primary Page Layout
 ================================================== -->
 <!-- phplogic -->
