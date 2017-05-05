@@ -20,10 +20,9 @@ define([
 
         disconnectWebsocket: function () {
             this.transmitMessage("disconnect()");
-
-            //websocket.onmessage = null;
-            //websocket.close();
-            //websocket = null;
+            this.websocket.onmessage = null;
+            this.websocket.close();
+            this.websocket = null;
         },
 
         transmitMessage: function(msg){
