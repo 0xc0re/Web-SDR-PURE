@@ -5,6 +5,9 @@ define([
     return declare(null, {
         websocket : null,
 
+        constructor: function(){
+        },
+
         startWebsocketByIpAndPort : function(ip, port, mode){
             var location = ip + ":" + port;
             this.startWebsocket(location, mode);
@@ -19,7 +22,6 @@ define([
         },
 
         disconnectWebsocket: function () {
-            this.transmitMessage("disconnect()");
             this.websocket.onmessage = null;
             this.websocket.close();
             this.websocket = null;

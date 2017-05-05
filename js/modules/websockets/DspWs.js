@@ -1,8 +1,12 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/lang",
     "./WebsocketBase",
-], function(declare, WebsocketBase){
+], function(declare, lang, WebsocketBase){
     return declare(WebsocketBase, {
+
+        constructor: function(){
+        },
 
         /** Override - What should happen if the connection doesnt open**/
         transactionErroreous: function (message) {
@@ -13,39 +17,31 @@ define([
         },
 
         /** Override - outputs spectral data **/
-        handleSpectralData: function(){
+        handleSpectralData: function(data){
         },
 
         /** Override - outputs audio data **/
-        handleAudioData: function(){
+        handleAudioData: function(data){
         },
 
         connectionOpened: function () {
-            console.log("connectionOpened");
             this.transactionCompleted();
         },
 
         messageReceived: function (event) {
             var myReader = new FileReader();
-            myReader.onload = this.processData;
+            myReader.onload = lang.hitch(this, this.processData);
             myReader.readAsArrayBuffer(event.data);
         },
 
         processData: function (result) {
-            console.log("processData");
-            console.log(result);
-            console.log(result[0]);
-            // response.success = response.state == "s" ? true : false;
-
-            /*
-             if(response.success) {
-             transactionCompleted(response.port);
-             } else {
-             transactionErroreous("DSP not started");
-             //connectionRefused();
-             //disconnectManager();
-             }
-             */
+            var targetResult = result.target.result;
+            targetResult = new Uint8Array(targetResult);
+            if(targetResult[0] == 0){
+                this.handleSpectralData(targetResult);
+            } else {
+                this.handleAudioData(targetResult);
+            }
         },
 
         transmitMessage: function(msg){

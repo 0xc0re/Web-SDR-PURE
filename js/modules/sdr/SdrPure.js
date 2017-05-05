@@ -30,8 +30,12 @@ define([
             this.cascade.drawCanvas(200);
         },
 
-        processDspData: function(){
+        handleSpectralData: function(data){
+            this.cascade.processSpectrumData(data);
+        },
 
+        handleAudioData: function(data){
+            console.log("handleAudioData");
         },
 
         //TEST
