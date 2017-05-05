@@ -37,7 +37,7 @@ function buildChannelContent($channelArray){
         $row .= '<td>'. $key . '</td>';
         $row .= '<td>'. $channel->state . '</td>';
         $row .= '<td>'. $channel->freq . '</td>';
-        $row .=  buildUserContent($key);
+        $row .=  buildUserContent($key, $channel->freq);
         $row .= "</tr>";
         echo $row;
     }
@@ -73,17 +73,18 @@ function buildUserHead(){
     return $userHead;
 }
 
-function buildUserContent($channelNr) {
+function buildUserContent($channelNr, $midFreq) {
     $action= getServer();
     $action .= "?site=sdr";
     $form = "<form class='borderlessForm' action='".$action."' method='post'>";
     //Add hidden field with middle freq
     $button = '<button type="submit" value="'.$channelNr.'" name="listenChannel">Listen</button>';
+    $freq = '<input type="hidden" name="portNr" value="'.$midFreq.'">';
 
     $userContent = "";
     $userLevel = getUserLevel();
     if($userLevel <= 20){
-        $userContent .= '<td>'.$form.$button.'</form></td>';
+        $userContent .= '<td>'.$form.$button.$freq.'</form></td>';
     }
     if($userLevel <= 10) {
         $userContent .= '<td><button>Connect</button></td>';

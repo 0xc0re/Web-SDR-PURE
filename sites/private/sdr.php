@@ -18,6 +18,7 @@
 </div>
 
 <?php
+var_dump($_POST);
 includeScripts();
 //handleSdrState(); //TODO Reactivate
 
@@ -36,9 +37,6 @@ function includeScripts(){
 }
 
 function handleSdrState(){
-//    $_SESSION["sdr"] = true; //In use
-//    $_SESSION["sdr"] = false; //Init state
-
     $userLevel = getUserLevel();
     if($userLevel <= 20){
         if(isset($_POST["moderatorChannel"]) or isset($_POST["adminChannel"])){
@@ -52,7 +50,8 @@ function handleSdrState(){
             return;
         }
     }
-
+//    $_SESSION["sdr"] = true; //In use
+//    $_SESSION["sdr"] = false; //Init state
     unset($_SESSION["sdr"]); //TODO Just 4 test reasons
     if(isset($_SESSION["sdr"])){
         //Handle sdr already in use

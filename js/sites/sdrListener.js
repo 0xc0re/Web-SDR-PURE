@@ -5,11 +5,10 @@ require([
     "dojo/DeferredList",
     "dojo/_base/Deferred",
     "modules/websockets/DspWs",
-    "modules/websockets/ManagerWs",
-    "modules/utils/messageDisplayer",
+    "modules/utils/MessageDisplayer",
     "modules/sdr/sdrPure",
     "dojo/domReady!",
-], function (on, dom, lang, DeferredList, Deferred, DspWebsocket, ManagerWebsocket, messageDisplayer, sdrPure) {
+], function (on, dom, lang, DeferredList, Deferred, DspWebsocket, MessageDisplayer, sdrPure) {
     //TODO read from config
     SAMPLE_WIDTH = 512;
     SAMPLE_SPEED = 10;
@@ -18,10 +17,11 @@ require([
     port = null;
 
     // Site Logic
-    // prepareReferences();
-    // initiateConnection();
+    prepareReferences();
+    initiateConnection();
 
     //************** TEST AREA START *************************
+    /*
     var param = {
         isModerator: false,
         containerId: "sdrPure",
@@ -52,14 +52,13 @@ require([
             webRadio.processSpectData(this.spectByteArr);
         }
     }
-
+    */
     //************** TEST AREA END *************************
 
 
     function prepareReferences(){
-        // initializeWebsocket();
-        // ManagerWebsocket
-        htmlLogger = new messageDisplayer();
+        initializeWebsocket();
+        htmlLogger = new MessageDisplayer();
     }
 
     function initializeWebsocket(){
@@ -91,25 +90,18 @@ require([
     function finishedWSHandshake(){
         var message = "setFPS "+this.SAMPLE_WIDTH+" "+this.SAMPLE_SPEED;
         dspSocket.transmitMessage(message);
-
         managerSocket.messageReceived = lang.hitch(this, readDspData);
     }
 
     function readDspData (event) {
-        console.log("readDspData");
         var myReader = new FileReader();
         myReader.onload = lang.hitch(this, processDspData);
-
-        myReader.readAsText(event.data);
-        // readAsArrayBuffer
+        myReader.readAsArrayBuffer(event.data);
     }
 
     function processDspData (result){
         console.log("processDspData");
         console.log(result);
-
-        var response = JSON.parse(result);
-        response.success = response.state == "s" ? true : false;
 
         // if(response.success) {
         //     disconnectManager();

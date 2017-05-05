@@ -24,6 +24,8 @@ define([
             console.log(event);
             var myReader = new FileReader();
             myReader.onload = processData;
+
+            //Read as arraybuffer in DSP
             myReader.readAsText(event.data); //TODO maybe hitch this
         },
 

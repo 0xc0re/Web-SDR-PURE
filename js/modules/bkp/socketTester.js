@@ -6,7 +6,7 @@ require([
     "dojo/_base/Deferred",
     "modules/websockets/managerWs",
     "modules/utils/MessageDisplayer",
-    "dojo/domReady!",
+    "dojo/domReady!js/modules/bkp/socketTester",
 ], function (dom, on, lang, DeferredList, Deferred, managerWebsocket, MessageDisplayer) {
     ip = null;
     port = null;
