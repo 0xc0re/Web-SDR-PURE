@@ -6,7 +6,7 @@ require([
     "dojo/_base/Deferred",
     "modules/websockets/DspWs",
     "modules/utils/MessageDisplayer",
-    "modules/sdr/sdrPure",
+    "modules/sdr/SdrPure",
     "dojo/domReady!",
 ], function (on, dom, lang, DeferredList, Deferred, DspWebsocket, MessageDisplayer, sdrPure) {
     //TODO read from config
@@ -62,8 +62,8 @@ require([
     }
 
     function initializeWebsocket(){
-        dspSocket = new DspWebsocket();
-        dspSocket.transactionErroreous = lang.hitch(this, showErrorMessage);
+        this.dspSocket = new DspWebsocket();
+        this.dspSocket.transactionErroreous = lang.hitch(this, showErrorMessage);
         window.onbeforeunload = function() {
             dspSocket.disconnectWebsocket();
             return "";
@@ -83,13 +83,13 @@ require([
 
     function startWSHandshake(){
         var location = buildServerLocation();
-        dspSocket.transactionCompleted = lang.hitch(this, finishedWSHandshake);
-        dspSocket.startWebsocket(location);
+        this.dspSocket.transactionCompleted = lang.hitch(this, finishedWSHandshake);
+        this.dspSocket.startWebsocket(location);
     }
 
     function finishedWSHandshake(){
         var message = "setFPS "+this.SAMPLE_WIDTH+" "+this.SAMPLE_SPEED;
-        dspSocket.transmitMessage(message);
+        this.dspSocket.transmitMessage(message);
         managerSocket.messageReceived = lang.hitch(this, readDspData);
     }
 
@@ -122,9 +122,9 @@ require([
     function startModerator(){
         var location = buildServerLocation();
         // managerSocket.transactionCompleted = lang.hitch(this, finishedWSHandshake);
-        dspSocket.startWebsocket(location);
+        this.dspSocket.startWebsocket(location);
 
-        dspSocket.messageReceived = function(result){
+        this.dspSocket.messageReceived = function(result){
 
         }
     }

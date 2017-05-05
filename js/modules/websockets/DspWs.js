@@ -20,20 +20,16 @@ define([
 
         // readData: function (event) {
         messageReceived: function (event) {
-            console.log("readInitialData");
+            console.log("messageReceived");
             console.log(event);
             var myReader = new FileReader();
-            myReader.onload = processData;
-
-            //Read as arraybuffer in DSP
-            myReader.readAsText(event.data); //TODO maybe hitch this
+            myReader.onload = this.processData;
+            myReader.arraybuffer(event.data);
         },
 
         processData: function (event) {
-            console.log("processInitialData");
+            console.log("processData");
             console.log(event);
-            var response = JSON.parse(this.result);
-            console.log(response);
             // response.success = response.state == "s" ? true : false;
 
             /*
