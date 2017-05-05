@@ -1,8 +1,8 @@
 define([
     "dojo/_base/declare",
-    "./websocketBase",
-], function(declare, websocketBase){
-    return declare(websocketBase, {
+    "./WebsocketBase",
+], function(declare, WebsocketBase){
+    return declare(WebsocketBase, {
 
         /** Override - What should happen if the connection doesnt open**/
         transactionErroreous: function (message) {

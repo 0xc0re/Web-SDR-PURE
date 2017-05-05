@@ -5,9 +5,9 @@ require([
     "dojo/DeferredList",
     "dojo/_base/Deferred",
     "modules/websockets/managerWs",
-    "modules/utils/messageDisplayer",
+    "modules/utils/MessageDisplayer",
     "dojo/domReady!",
-], function (dom, on, lang, DeferredList, Deferred, managerWebsocket, messageDisplayer) {
+], function (dom, on, lang, DeferredList, Deferred, managerWebsocket, MessageDisplayer) {
     ip = null;
     port = null;
 
@@ -19,7 +19,7 @@ require([
         initializeWebsocket();
         managerSocket = new managerWebsocket();
         managerSocket.transactionErroreous = lang.hitch(this, showErrorMessage);
-        htmlLogger = new messageDisplayer();
+        htmlLogger = new MessageDisplayer();
     }
 
     function initializeWebsocket(){

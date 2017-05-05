@@ -4,17 +4,15 @@ require([
     "dojo/_base/lang",
     "dojo/DeferredList",
     "dojo/_base/Deferred",
-    "modules/websockets/dspWs",
+    "modules/websockets/DspWs",
+    "modules/websockets/ManagerWs",
     "modules/utils/messageDisplayer",
     "modules/sdr/sdrPure",
-    "modules/sdr/jsCascade",
     "dojo/domReady!",
-], function (on, dom, lang, DeferredList, Deferred, dspWebsocket, messageDisplayer, sdrPure, jsCascade) {
-
+], function (on, dom, lang, DeferredList, Deferred, DspWebsocket, ManagerWebsocket, messageDisplayer, sdrPure) {
     //TODO read from config
     SAMPLE_WIDTH = 512;
     SAMPLE_SPEED = 10;
-    //***
 
     ip = null;
     port = null;
@@ -57,13 +55,15 @@ require([
 
     //************** TEST AREA END *************************
 
+
     function prepareReferences(){
-        initializeWebsocket();
+        // initializeWebsocket();
+        // ManagerWebsocket
         htmlLogger = new messageDisplayer();
     }
 
     function initializeWebsocket(){
-        dspSocket = new dspWebsocket();
+        dspSocket = new DspWebsocket();
         dspSocket.transactionErroreous = lang.hitch(this, showErrorMessage);
         window.onbeforeunload = function() {
             dspSocket.disconnectWebsocket();
@@ -85,38 +85,27 @@ require([
     function startWSHandshake(){
         var location = buildServerLocation();
         dspSocket.transactionCompleted = lang.hitch(this, finishedWSHandshake);
-        //dspSocket.startWebsocket(location);
+        dspSocket.startWebsocket(location);
     }
 
     function finishedWSHandshake(){
         var message = "setFPS "+this.SAMPLE_WIDTH+" "+this.SAMPLE_SPEED;
         dspSocket.transmitMessage(message);
 
-
-        //dspSocket.transmitMessage("startChannel(0)");
-
-        /*
-         readInitialData();
-         managerSocket.messageReceived = lang.hitch(this, readInitialData);
-         showWaterfall();
-         */
-
-        /*
-         setPort(port);
-         managerSocket.disconnectWebsocket();
-         startModerator();
-         */
+        managerSocket.messageReceived = lang.hitch(this, readDspData);
     }
 
-    function readInitialData (event) {
-        console.log("readInitialData");
+    function readDspData (event) {
+        console.log("readDspData");
         var myReader = new FileReader();
-        myReader.onload = lang.hitch(this, processInitialData);
+        myReader.onload = lang.hitch(this, processDspData);
+
         myReader.readAsText(event.data);
+        // readAsArrayBuffer
     }
 
-    function processInitialData (result){
-        console.log("processInitialData");
+    function processDspData (result){
+        console.log("processDspData");
         console.log(result);
 
         var response = JSON.parse(result);
@@ -185,11 +174,5 @@ require([
 
     function showErrorMessage(message){
         htmlLogger.showMsg(message, true);
-    }
-
-    //Watterfall thingy to jsCascade
-    function showWaterfall(){
-        document.getElementById("sndMsg").style.display = "";
-        document.getElementById("waterfall").style.display = "";
     }
 });

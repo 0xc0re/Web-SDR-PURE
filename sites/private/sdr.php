@@ -23,7 +23,9 @@ includeScripts();
 
 function includeScripts(){
     $userLevel = getUserLevel();
-    echo '<script src="../../js/sites/sdrListener.js"></script>';
+
+//    "modules/websockets/managerWs"
+    echo '<script src="../../js/sites/SdrListener.js"></script>';
 //    if($userLevel <= 1){
 ////Insert admin script
 //    } elseif($userLevel <= 10){

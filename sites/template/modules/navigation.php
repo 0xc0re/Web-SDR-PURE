@@ -23,7 +23,6 @@ function drawNavigation(){
         if($userLevel <= 20){ //private level
             echo(buildMenupoint("Channels", "site=channels"));
             echo(buildMenupoint("SDR", "site=sdr"));
-            echo(buildMenupoint("Sockettest", "site=socketTest"));
             echo(buildMenupoint("My Profile", "site=profile"));
             echo(buildMenupoint("Logout", "site=logout"));
         }
@@ -48,8 +47,6 @@ function setCurrent($siteLocation){
 function buildPageContent(){
     if ($_SERVER['QUERY_STRING'] == "") {
         include( dirname(__FILE__) . "/../../public/intro.php");
-    } elseif ($_SERVER['QUERY_STRING'] == "site=socketTest") {
-        include(dirname(__FILE__) . "/../../private/socketTester.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=logout") {
         include( dirname(__FILE__) . "/../../public/intro.php");
     } elseif ($_SERVER['QUERY_STRING'] == "site=profile") {
