@@ -51,7 +51,7 @@ define([
         transmitMessage: function(msg){
              while(msg.length < 64)
              msg += "\0";
-             dspWebsocket.send(msg);
+             this.websocket.send(msg);
         },
     });
 });
