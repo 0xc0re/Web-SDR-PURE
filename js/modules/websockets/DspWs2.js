@@ -1,6 +1,6 @@
 define([
     "dojo/_base/declare",
-    "./WebsocketBase",
+    "./WebsocketBase2",
 ], function(declare, WebsocketBase){
     return declare(WebsocketBase, {
 
@@ -13,33 +13,44 @@ define([
         },
 
         connectionOpened: function () {
-            this.onmessage = this.readInitialData;
+            console.log("connectionOpened");
+            // this.onmessage = this.readData;
             this.transactionCompleted();
         },
 
-        readInitialData: function (event) {
+        // readData: function (event) {
+        messageReceived: function (event) {
             console.log("readInitialData");
             console.log(event);
             var myReader = new FileReader();
-            myReader.onload = processInitialData;
+            myReader.onload = processData;
+
+            //Read as arraybuffer in DSP
             myReader.readAsText(event.data); //TODO maybe hitch this
         },
 
-        processInitialData: function (event) {
+        processData: function (event) {
             console.log("processInitialData");
             console.log(event);
             var response = JSON.parse(this.result);
-            response.success = response.state == "s" ? true : false;
+            console.log(response);
+            // response.success = response.state == "s" ? true : false;
 
             /*
-            if(response.success) {
-                transactionCompleted(response.port);
-            } else {
-                transactionErroreous("DSP not started");
-                //connectionRefused();
-                //disconnectManager();
-            }
-            */
+             if(response.success) {
+             transactionCompleted(response.port);
+             } else {
+             transactionErroreous("DSP not started");
+             //connectionRefused();
+             //disconnectManager();
+             }
+             */
+        },
+
+        transmitMessage: function(msg){
+             while(msg.length < 64)
+             msg += "\0";
+             dspWebsocket.send(msg);
         },
     });
 });

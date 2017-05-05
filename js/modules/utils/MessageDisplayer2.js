@@ -9,7 +9,7 @@ define([
     "dojo/dom",
     "dojo/dom-construct",
     "dojo/dom-class",
-    "dojo/domReady!js/modules/utils/MessageDisplayer",
+    "dojo/domReady!js/modules/utils/MessageDisplayer2",
 ], function (declare, dom, domConstruct, domClass) {
     return declare(null, {
         /**
