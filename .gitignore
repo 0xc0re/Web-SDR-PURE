@@ -7,3 +7,4 @@ deps/
 customContent/configuration/pureManager/configuration.xml
 customContent/configuration/userManagement/userList.xml
 customContent/configuration/userManagement/userRoles.xml
+.idea/workspace.xml
