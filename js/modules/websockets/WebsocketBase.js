@@ -22,9 +22,11 @@ define([
         },
 
         disconnectWebsocket: function () {
-            this.websocket.onmessage = null;
-            this.websocket.close();
-            this.websocket = null;
+            if(this.websocket){
+                this.websocket.onmessage = null;
+                this.websocket.close();
+                this.websocket = null;
+            }
         },
 
         transmitMessage: function(msg){
