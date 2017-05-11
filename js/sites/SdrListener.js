@@ -98,7 +98,8 @@ require([
     function finishedWSHandshake(){
         var message = "setFPS "+this.SAMPLE_WIDTH+" "+this.SAMPLE_SPEED;
         this.dspSocket.transmitMessage(message);
-        //TODO start audio stream
+        var message = "startAudioStream";
+        this.dspSocket.transmitMessage(message);
 
         this.dspSocket.handleSpectralData = lang.hitch(this.webRadio, this.webRadio.handleSpectralData);
         this.dspSocket.handleAudioData = lang.hitch(this.webRadio, this.webRadio.handleAudioData);

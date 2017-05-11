@@ -31,10 +31,11 @@ define([
             this.cmdMap = new CmdMap();
             this.menuBar = new PureMenubar(this.cmdMap);
             this.audioPlayer = new JsAudio();
-
         },
 
         buildSDRContent: function(){
+            this.audioPlayer.initializeAudio();
+
             //Setup Frame
             this.menuBar.buildMenubar(this.containerNode.id);
             this.audioPlayer.buildAudioPlayer(this.containerNode);
@@ -43,11 +44,13 @@ define([
         },
 
         handleSpectralData: function(data){
+            console.log("handleSpectralData");
             this.cascade.processSpectrumData(data);
         },
 
         handleAudioData: function(data){
             console.log("handleAudioData");
+            this.audioPlayer.playAudio(data);
         },
 
         initBL: function(){

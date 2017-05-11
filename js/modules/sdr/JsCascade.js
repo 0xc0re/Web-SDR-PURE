@@ -34,7 +34,7 @@ define([
             var containter = dom.byId(this.containerId);
             var canvas = domConstruct.create("canvas", {id:"jsCascade"}, containter);
             canvas.style.border = "1px solid white";
-            canvas.style.background = "purple";
+            canvas.style.background = "black";
 
             canvas.width = this.samplesWidth;
             canvas.height = height;

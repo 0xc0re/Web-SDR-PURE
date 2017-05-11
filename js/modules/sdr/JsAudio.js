@@ -1,23 +1,44 @@
 define([
     "dojo/_base/declare",
-    "dojox/mobile/Audio",
-    "dojox/mobile/parser",
-    "dojox/mobile"
-], function(declare, Audio){
+    "dojo/dom-construct",
+    "dojo/on",
+], function(declare, domConstruct, on){
     return declare(null, {
+        audioCtx: null,
+        source: null,
+        gainNode: null,
 
         constructor: function(params){
             this.initDecodeTable();
+            this.initializeAudio();
+        },
+
+        initializeAudio: function(){
+            var AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.audioCtx  = new AudioContext();
+
+            this.source = this.audioCtx.createBufferSource();
+            this.gainNode = this.audioCtx.createGain();
+
+            this.source.connect(this.gainNode);
+            this.gainNode.connect(this.audioCtx.destination);
         },
 
         buildAudioPlayer: function(containerNode){
-            var widget = new Audio();
-            containerNode.appendChild(widget.domNode);
-            widget.startup();
-        },
+            var test = domConstruct.create("button", {isMuted: false}, containerNode);
+            test.innerHTML = "MUTE";
 
-        processAudioData: function(){
-
+            var self = this;
+            on(test, "click", function(e){
+                if(this.isMuted){
+                    self.gainNode.gain.value = 1;
+                    this.innerHTML = "Mute";
+                } else {
+                    self.gainNode.gain.value = 0;
+                    this.innerHTML = "Unmute";
+                }
+                this.isMuted = !this.isMuted;
+            });
         },
 
         playAudio: function (data){
@@ -30,25 +51,21 @@ define([
 
         for (var i = 0, audioChunk; audioChunk = data[i]; ++i) {
             // Create/set audio buffer for each chunk
-            var audioBuffer = audioCtx.createBuffer(1, 800, 8000);
+            var audioBuffer = this.audioCtx.createBuffer(1, 800, 8000);
             if (!audioBuffer)
             {
-                console.log("audiobuffer empty");
                 continue;
             }
-
             audioBuffer.getChannelData(0).set(audioChunk);
 
-            var source = audioCtx.createBufferSource();
-            source.buffer = audioBuffer;
-            source.noteOn(startTime);
-            source.connect(audioCtx.destination);
-
+            // var source = this.audioCtx.createBufferSource();
+            this.source.buffer = audioBuffer;
+            this.source.noteOn(startTime);
+            this.source.connect(this.audioCtx.destination);
             startTime += audioBuffer.duration;
         }
     },
 
-        //TODO Only one tine
     initDecodeTable: function(){
         decodeTable = new Array(256);
         for (var i = 0; i < 265; i++){
