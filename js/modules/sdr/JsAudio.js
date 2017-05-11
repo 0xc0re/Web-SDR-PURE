@@ -24,21 +24,8 @@ define([
             this.gainNode.connect(this.audioCtx.destination);
         },
 
-        buildAudioPlayer: function(containerNode){
-            var test = domConstruct.create("button", {isMuted: false}, containerNode);
-            test.innerHTML = "MUTE";
-
-            var self = this;
-            on(test, "click", function(e){
-                if(this.isMuted){
-                    self.gainNode.gain.value = 1;
-                    this.innerHTML = "Mute";
-                } else {
-                    self.gainNode.gain.value = 0;
-                    this.innerHTML = "Unmute";
-                }
-                this.isMuted = !this.isMuted;
-            });
+        setVolume: function(value){
+            this.gainNode.gain.value = value;
         },
 
         playAudio: function (data){

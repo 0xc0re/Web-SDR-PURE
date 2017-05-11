@@ -79,8 +79,6 @@ function handleListenCommand(){
     if($result->state == "f"){
         showError($result->message);
     } else {
-        echo $result->port;
-        echo "<br>";
         setDspPort((string)$result->port);
         $_SESSION["sdr"] = true;
     }
