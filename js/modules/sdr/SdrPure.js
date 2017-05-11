@@ -1,15 +1,24 @@
 define([
     "dojo/_base/declare",
     "dojo/dom",
+    "dojo/on",
+    "modules/sdr/CmdMap",
     "modules/sdr/JsCascade",
     "modules/sdr/JsAudio",
     "modules/sdr/PureMenubar",
-], function(declare, dom,  JsCascade, JsAudio, PureMenubar){
+], function(declare, dom, on,  CmdMap, JsCascade, JsAudio, PureMenubar){
     return declare(null, {
         containerNode: null,
         cascade: null,
         menuBar: null,
         audioPlayer: null,
+        cmdMap: null,
+
+        /**
+         * Needs to be overwritten
+         */
+        transmitToDsp: function(message){
+        },
 
         /**
          *
@@ -19,15 +28,18 @@ define([
         constructor: function(params){
             this.containerNode = dom.byId(params.containerId);
             this.cascade = new JsCascade(params);
-            this.menuBar = new PureMenubar();
+            this.cmdMap = new CmdMap();
+            this.menuBar = new PureMenubar(this.cmdMap);
             this.audioPlayer = new JsAudio();
+
         },
 
-        buildRadioContent: function(){
+        buildSDRContent: function(){
             //Setup Frame
             this.menuBar.buildMenubar(this.containerNode.id);
             this.audioPlayer.buildAudioPlayer(this.containerNode);
             this.cascade.drawCanvas(200);
+            this.initBL();
         },
 
         handleSpectralData: function(data){
@@ -38,10 +50,22 @@ define([
             console.log("handleAudioData");
         },
 
-        //TEST
-        processSpectData: function(data){
-            this.cascade.processSpectrumData(data);
-        }
+        initBL: function(){
+            console.log("initBL");
+            this.initModeLogic();
+        },
+
+        initModeLogic: function(){
+            var self = this;
+            var radioBtns = dom.byId("modeDrDwn").children[0].children;
+            for(var i=0; i < radioBtns.length; i++){
+                on(radioBtns[i], "click", function(e){
+                    var mode = self.cmdMap.MODE_MAP[e.target.innerHTML];
+                    var message = "setMode "+mode;
+                    self.transmitToDsp(message);
+                });
+            }
+        },
 
     });
 });

@@ -21,7 +21,7 @@ require([
 
     // Site Logic
     prepareReferences();
-    initiateConnection();
+    // initiateConnection();
 
     //************** TEST AREA START *************************
     /*
@@ -53,6 +53,8 @@ require([
         initializeSdr();
         initializeWebsocket();
         htmlLogger = new MessageDisplayer();
+
+        this.webRadio.transmitToDsp = lang.hitch(this.dspSocket, this.dspSocket.transmitMessage);
     }
 
     function initializeSdr(){
@@ -64,7 +66,7 @@ require([
             samplesSpeed: SAMPLE_SPEED,
         }
         this.webRadio = new SdrPure(param);
-        this.webRadio.buildRadioContent();
+        this.webRadio.buildSDRContent();
     }
 
     function initializeWebsocket(){
