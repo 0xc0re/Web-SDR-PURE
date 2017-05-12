@@ -1,9 +1,5 @@
 <?php
-$socket;
-$dspPort;
-
 function sendMessageToSocket($host, $port, $message){
-    global $socket;
     set_time_limit(5);
     //Create and connect to socket
     $socket = socket_create(AF_INET, SOCK_STREAM, 0) or die("Could not create socket\n");
@@ -20,12 +16,4 @@ function sendMessageToSocket($host, $port, $message){
 
     //Cut off null terminator (Since its built from c)
     return substr($result, 0, -1);
-}
-
-function setDspPort($port){
-    $_SESSION["dspPort"] = $port;
-}
-
-function getDspPort(){
-    return $_SESSION["dspPort"];
 }

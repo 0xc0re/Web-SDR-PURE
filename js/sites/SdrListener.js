@@ -12,16 +12,15 @@ require([
     dspSocket = null;
     webRadio = null;
 
-    //TODO read from config
-    SAMPLE_WIDTH = 512;
-    SAMPLE_SPEED = 10;
+    SAMPLE_WIDTH = null;
+    SAMPLE_SPEED = null;
 
     ip = null;
     port = null;
+    midFreq = null;
 
     // Site Logic
-    prepareReferences();
-    // initiateConnection();
+    getInitData();
 
     //************** TEST AREA START *************************
     setupTest();
@@ -49,22 +48,37 @@ require([
     }
     //************** TEST AREA END *************************
 
+    function getInitData(){
+        var deferreds = [];
+        deferreds.push(getAjaxData("showSampleSpeed", lang.hitch(this, setSampleSpeed), showErrorMessage));
+        deferreds.push(getAjaxData("showSampleWidth", lang.hitch(this, setSampleWidth), showErrorMessage));
+        deferreds.push(getAjaxData("showMidFrequency", lang.hitch(this, setMidFrequency), showErrorMessage));
+
+        var defList = new DeferredList(deferreds);
+        defList.then(function(result){
+            startSite();
+        })
+    }
+
+    function startSite(){
+        prepareReferences();
+        // initiateConnection();
+    }
 
     function prepareReferences(){
         initializeSdr();
         initializeWebsocket();
         htmlLogger = new MessageDisplayer();
-
         this.webRadio.transmitToDsp = lang.hitch(this.dspSocket, this.dspSocket.transmitMessage);
     }
 
     function initializeSdr(){
-        //TODO read those configs dynamically
         var param = {
             isModerator: false,
             containerId: "sdrPure",
             samplesWidth: SAMPLE_WIDTH,
             samplesSpeed: SAMPLE_SPEED,
+            midFrequency: midFreq,
         }
         this.webRadio = new SdrPure(param);
         this.webRadio.buildSDRContent();
@@ -117,6 +131,18 @@ require([
 
     function setPort(inputPort){
         port = inputPort;
+    }
+
+    function setSampleWidth(inputWidth){
+        SAMPLE_WIDTH = inputWidth;
+    }
+
+    function setSampleSpeed(inputSpeed){
+        SAMPLE_SPEED = inputSpeed;
+    }
+
+    function setMidFrequency(inputFreq){
+        midFreq = inputFreq;
     }
 
     function getAjaxData(ajaxMethod, successCallback, errorCallback){

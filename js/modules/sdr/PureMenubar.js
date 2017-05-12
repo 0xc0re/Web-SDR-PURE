@@ -13,9 +13,11 @@ define([
     return declare(null, {
         cmdMap: null,
         slider: null,
+        midFrequency: null,
 
-        constructor: function(cmdMap){
+        constructor: function(cmdMap, midFreq){
             this.cmdMap = cmdMap;
+            this.midFrequency = midFreq;
         },
 
         buildMenubar: function(containerId){
@@ -98,7 +100,7 @@ define([
 
         buildMidFreqVal: function(){
             var data = domConstruct.create("td");
-            var input = domConstruct.create("div", {innerHTML: "100"});
+            var input = domConstruct.create("div", {innerHTML: this.midFrequency});
             data.appendChild(input);
             return data;
         },
@@ -112,7 +114,7 @@ define([
 
         buildFreqVal: function(){
             var data = domConstruct.create("td");
-            var input = domConstruct.create("input", {type: "number", value: "100", id: "freqInput"});
+            var input = domConstruct.create("input", {type: "number", value: this.midFrequency, id: "freqInput"});
             data.appendChild(input);
             return data;
         },

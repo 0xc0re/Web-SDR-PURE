@@ -4,6 +4,7 @@ define([
     "dojo/dom",
 ], function(declare, domConstruct, dom){
     return declare(null, {
+        canvasHeight: null,
         HEADER_LENGTH: 15,
 
         /**
@@ -31,6 +32,7 @@ define([
          * @param height - of the canvas in px
          */
         drawCanvas: function(height){
+            this.canvasHeight = height;
             var containter = dom.byId(this.containerId);
             var canvas = domConstruct.create("canvas", {id:"jsCascade"}, containter);
             canvas.style.border = "1px solid white";
@@ -91,14 +93,14 @@ define([
                     //Middle frequency line
                     this.canvas.fillStyle = "#FF0000";
                 }
-                this.canvas.fillRect(i - 15, this.currentRow, 1, 1);
+                this.canvas.fillRect(i - this.HEADER_LENGTH, this.currentRow, 1, 1);
             }
 
             //Emtpies the canvas to prevent overflow
             this.currentRow++;
-            if (this.currentRow >= 400) {
+            if (this.currentRow >= this.canvasHeight) {
                 this.canvas.fillStyle = "rgba(0,0,0,1)";
-                this.canvas.fillRect(0, 0, 512, 400);
+                this.canvas.fillRect(0, 0, this.samplesWidth, this.canvasHeight);
                 this.currentRow = 0;
             }
         },

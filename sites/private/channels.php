@@ -19,10 +19,10 @@ function connectToManager(){
     $host = getManagerIp();
     $port = getManagerPort();
 
-    $result = sendMessageToSocket($host, $port, $message);
+//    $result = sendMessageToSocket($host, $port, $message);
 
     //Test data
-    //$result = '[{"freq":"24800000","state":"free"},{"freq":"24800000","state":"free"}]';
+    $result = '[{"freq":"24800000","state":"free"},{"freq":"24800000","state":"free"}]';
 
     //Decode JSON String
     $channelArray = json_decode($result);
@@ -79,7 +79,7 @@ function buildUserContent($channelNr, $midFreq) {
     $form = "<form class='borderlessForm' action='".$action."' method='post'>";
     //Add hidden field with middle freq
     $button = '<button type="submit" value="'.$channelNr.'" name="listenChannel">Listen</button>';
-    $freq = '<input type="hidden" name="portNr" value="'.$midFreq.'">';
+    $freq = '<input type="hidden" name="midFreq" value="'.$midFreq.'">';
 
     $userContent = "";
     $userLevel = getUserLevel();

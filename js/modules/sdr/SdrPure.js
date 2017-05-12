@@ -29,7 +29,7 @@ define([
             this.containerNode = dom.byId(params.containerId);
             this.cascade = new JsCascade(params);
             this.cmdMap = new CmdMap();
-            this.menuBar = new PureMenubar(this.cmdMap);
+            this.menuBar = new PureMenubar(this.cmdMap, params.midFrequency);
             this.audioPlayer = new JsAudio();
             this.audioPlayer.initializeAudio();
         },
