@@ -21,7 +21,7 @@ require([
 
     // Site Logic
     prepareReferences();
-    // initiateConnection();
+    initiateConnection();
 
     //************** TEST AREA START *************************
     /*
