@@ -20,3 +20,15 @@ function showManagerPort(){
 function showDspPort(){
     echo getDspPort();
 }
+
+function showSampleSpeed(){
+    echo getSampleSpeed();
+}
+
+function showSampleWidth(){
+    echo getSampleWidth();
+}
+
+function showMidFrequency(){
+    echo getMidFrequency();
+}

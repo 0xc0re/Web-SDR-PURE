@@ -29,16 +29,14 @@ define([
             this.containerNode = dom.byId(params.containerId);
             this.cascade = new JsCascade(params);
             this.cmdMap = new CmdMap();
-            this.menuBar = new PureMenubar(this.cmdMap);
+            this.menuBar = new PureMenubar(this.cmdMap, params.midFrequency);
             this.audioPlayer = new JsAudio();
+            this.audioPlayer.initializeAudio();
         },
 
         buildSDRContent: function(){
-            this.audioPlayer.initializeAudio();
-
             //Setup Frame
             this.menuBar.buildMenubar(this.containerNode.id);
-            this.audioPlayer.buildAudioPlayer(this.containerNode);
             this.cascade.drawCanvas(200);
             this.initBL();
         },
@@ -56,6 +54,9 @@ define([
         initBL: function(){
             console.log("initBL");
             this.initModeLogic();
+            this.initFreqLogic();
+            this.initBandLogic();
+            this.initVolumeLogic();
         },
 
         initModeLogic: function(){
@@ -68,6 +69,40 @@ define([
                     self.transmitToDsp(message);
                 });
             }
+        },
+
+        initBandLogic: function(){
+            var self = this;
+            var radioBtns = dom.byId("bandDrDwn").children[0].children;
+            for(var i=0; i < radioBtns.length; i++){
+                on(radioBtns[i], "click", function(e){
+                    var freq = self.cmdMap.BAND_MAP[e.target.innerHTML]
+                    var message = "setFrequency "+freq;
+                    // self.transmitToDsp(message);
+                    dom.byId("freqInput").value = freq;
+                });
+            }
+        },
+
+        initFreqLogic: function(){
+            var freqBtn = dom.byId("freqButton");
+            var self = this;
+            on(freqBtn, "click", function(e){
+                var freq = dom.byId("freqInput").value;
+                var message = "setFrequency "+freq;
+                self.transmitToDsp(message);
+            });
+        },
+
+        initVolumeLogic: function(){
+            var self = this;
+            on(this.menuBar.slider, "change", function(e){
+                console.log("Voliuume");
+                console.log(this.value);
+                var volume = this.value / 100;
+                console.log(volume);
+                self.audioPlayer.setVolume(volume);
+            });
         },
 
     });

@@ -19,8 +19,20 @@ define([
             "DRM": 11,
         },
 
-        constructor: function(){
+        BAND_MAP : {
+            "10 Meters": 29000000,
+            "12 Meters": 24940000,
+            "15 Meters": 21225000,
+            "17 Meters": 18118000,
+            "20 Meters": 14175000,
+            "30 Meters": 10125000,
+            "40 Meters": 7150000,
+            "60 Meters": 5382000,
+            "80 Meters": 3750000,
+            "160 Meters": 1900000,
+        },
 
+        constructor: function(){
         },
 
     });

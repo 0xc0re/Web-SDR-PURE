@@ -5,7 +5,9 @@ $configXml;
 function getConfig(){
     global $configLoc;
     global $configXml;
-    $configXml = loadXmlFile($configLoc);
+    if(!isset($configXml)){
+        $configXml = loadXmlFile($configLoc);
+    }
     return $configXml;
 }
 
@@ -42,5 +44,17 @@ function getManagerIp(){
 function getManagerPort(){
     $config = getConfig();
     $result = $config->xpath('//item[@id="purePort"]');
+    return (string) $result[0];
+}
+
+function getSampleSpeed(){
+    $config = getConfig();
+    $result = $config->xpath('//item[@id="sampleSpeed"]');
+    return (string) $result[0];
+}
+
+function getSampleWidth(){
+    $config = getConfig();
+    $result = $config->xpath('//item[@id="sampleWidth"]');
     return (string) $result[0];
 }

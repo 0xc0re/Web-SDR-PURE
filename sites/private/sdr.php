@@ -24,7 +24,6 @@ handleSdrState(); //TODO Reactivate
 function includeScripts(){
     $userLevel = getUserLevel();
 
-//    "modules/websockets/managerWs"
     echo '<script src="../../js/sites/SdrListener.js"></script>';
 //    if($userLevel <= 1){
 ////Insert admin script
@@ -79,8 +78,7 @@ function handleListenCommand(){
     if($result->state == "f"){
         showError($result->message);
     } else {
-        echo $result->port;
-        echo "<br>";
+        setMidFrequency($_POST["midFreq"]);
         setDspPort((string)$result->port);
         $_SESSION["sdr"] = true;
     }
