@@ -39,7 +39,7 @@ require([
         });
 
         function sendData(){
-            var amount = 5;
+            var amount = 10;
             while(amount > 0){
                 amount--;
                 this.webRadio.handleSpectralData(this.spectByteArr);
@@ -62,7 +62,7 @@ require([
 
     function startSite(){
         prepareReferences();
-        // initiateConnection();
+        initiateConnection();
     }
 
     function prepareReferences(){

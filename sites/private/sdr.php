@@ -19,7 +19,7 @@
 
 <?php
 includeScripts();
-//handleSdrState(); //TODO Reactivate
+handleSdrState();
 
 function includeScripts(){
     $userLevel = getUserLevel();

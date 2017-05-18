@@ -14,7 +14,6 @@ define([
         AOI_Lower: 10,
 
         canvas: null,
-        currentRow: null,
 
         containerId: null,
         samplesSpeed: null,
@@ -24,7 +23,6 @@ define([
             this.containerId = params.containerId;
             this.samplesSpeed = params.samplesSpeed;
             this.samplesWidth = params.samplesWidth;
-            this.currentRow = 0;
         },
 
         /**
@@ -33,17 +31,29 @@ define([
          */
         drawCanvas: function(height){
             this.canvasHeight = height;
-            var containter = dom.byId(this.containerId);
-            var canvas = domConstruct.create("canvas", {id:"jsCascade"}, containter);
-            canvas.style.border = "1px solid white";
-            canvas.style.background = "black";
+            var sdr = dom.byId(this.containerId);
+            var containter = domConstruct.create("div", {id:"jsCascade"}, sdr);
+            containter.style.lineHeight = "0px";
+            containter.style.height = height+"px";
+            containter.style.width = "100%";
 
-            canvas.width = this.samplesWidth;
-            canvas.height = height;
+            for(var i=0; i < height; i++){
+                this.createCanvasPart(containter);
+            }
+            this.container = containter;
+        },
 
-            canvas.style.width = "100%";
-            canvas.style.height = "100%";
-            this.canvas = canvas.getContext("2d");
+        createCanvasPart: function(parentNode){
+            var wrapper = domConstruct.create("div", {className:"cascadePart"});
+            wrapper.style.height = "1px";
+            parentNode.insertBefore(wrapper, parentNode.firstChild)
+
+            var canvPart = domConstruct.create("canvas", {className:"cascadePart"}, wrapper);
+            canvPart.style.background = "black";
+            canvPart.width = this.samplesWidth;
+            canvPart.height = 1;
+            canvPart.style.width = "100%";
+            return canvPart;
         },
 
         /**
@@ -51,10 +61,10 @@ define([
          * @param spectralData - Array of spectraldata
          */
         processSpectrumData: function(spectralData) {
-            if(!this.canvas) return;
+            if(!this.container) return;
 
-            var arrayRange = this.samplesWidth + this.HEADER_LENGTH;
-            var middlePositon = this.samplesWidth/2 + this.HEADER_LENGTH;
+            var arrayRange = +this.samplesWidth + +this.HEADER_LENGTH;
+            var middlePositon = Math.round(this.samplesWidth/2 + this.HEADER_LENGTH);
 
             //Process header
             var samplesLen = spectralData[4] + spectralData[3] << 8;
@@ -63,9 +73,7 @@ define([
             var samplingRate = spectralData[12] + spectralData[11] << 8 + spectralData[10] << 16 + spectralData[9] << 24;
 
             var avg = 0;
-            var i = 0;
-
-            for (i = this.HEADER_LENGTH; i < arrayRange; i++) {
+            for (var i = this.HEADER_LENGTH; i < arrayRange; i++) {
                 avg += spectralData[i];
             }
             avg = (avg / this.samplesWidth);
@@ -75,6 +83,11 @@ define([
 
             var frac = 255 / diff;
 
+            //create new canvas
+            var canvas = this.createCanvasPart(this.container);
+            canvas = canvas.getContext("2d");
+
+            //Draw on new canvas
             for (i = this.HEADER_LENGTH; i < arrayRange; i++) {
                 var val = spectralData[i];
 
@@ -88,21 +101,20 @@ define([
                     val = 255-val;
                 }
 
-                this.canvas.fillStyle = "#00"+val.toString(16)+"00";
+                canvas.fillStyle = "#00"+val.toString(16)+"00";
                 if(i == middlePositon){
                     //Middle frequency line
-                    this.canvas.fillStyle = "#FF0000";
+                    canvas.fillStyle = "#FF0000";
                 }
-                this.canvas.fillRect(i - this.HEADER_LENGTH, this.currentRow, 1, 1);
+                canvas.fillRect(i - this.HEADER_LENGTH, 0, 1, 1);
             }
 
-            //Emtpies the canvas to prevent overflow
-            this.currentRow++;
-            if (this.currentRow >= this.canvasHeight) {
-                this.canvas.fillStyle = "rgba(0,0,0,1)";
-                this.canvas.fillRect(0, 0, this.samplesWidth, this.canvasHeight);
-                this.currentRow = 0;
-            }
+            //Delete last item from canvas
+            this.container.lastChild.remove();
+        },
+
+        calculateSignalStrength: function(spectralData){
+
         },
 
     });

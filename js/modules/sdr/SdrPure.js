@@ -52,7 +52,6 @@ define([
         },
 
         initBL: function(){
-            console.log("initBL");
             this.initModeLogic();
             this.initFreqLogic();
             this.initBandLogic();
@@ -97,10 +96,7 @@ define([
         initVolumeLogic: function(){
             var self = this;
             on(this.menuBar.slider, "change", function(e){
-                console.log("Voliuume");
-                console.log(this.value);
                 var volume = this.value / 100;
-                console.log(volume);
                 self.audioPlayer.setVolume(volume);
             });
         },

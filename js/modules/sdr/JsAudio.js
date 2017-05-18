@@ -29,28 +29,28 @@ define([
         },
 
         playAudio: function (data){
-        if (data[0] != 1)
-            return;
+            if (data[0] != 1)
+                return;
 
-        var startTime = 0;
+            var startTime = 0;
 
-        var decoded = [];
+            var decoded = [];
 
-        for (var i = 0, audioChunk; audioChunk = data[i]; ++i) {
-            // Create/set audio buffer for each chunk
-            var audioBuffer = this.audioCtx.createBuffer(1, 800, 8000);
-            if (!audioBuffer)
-            {
-                continue;
+            for (var i = 0, audioChunk; audioChunk = data[i]; ++i) {
+                // Create/set audio buffer for each chunk
+                var audioBuffer = this.audioCtx.createBuffer(1, 800, 8000);
+                if (!audioBuffer)
+                {
+                    continue;
+                }
+                audioBuffer.getChannelData(0).set(audioChunk);
+
+                // var source = this.audioCtx.createBufferSource();
+                this.source.buffer = audioBuffer;
+                this.source.noteOn(startTime);
+                this.source.connect(this.audioCtx.destination);
+                startTime += audioBuffer.duration;
             }
-            audioBuffer.getChannelData(0).set(audioChunk);
-
-            // var source = this.audioCtx.createBufferSource();
-            this.source.buffer = audioBuffer;
-            this.source.noteOn(startTime);
-            this.source.connect(this.audioCtx.destination);
-            startTime += audioBuffer.duration;
-        }
     },
 
     initDecodeTable: function(){
