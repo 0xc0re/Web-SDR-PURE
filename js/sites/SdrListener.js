@@ -19,7 +19,6 @@ require([
     port = null;
     midFreq = null;
 
-    // Site Logic
     getInitData();
 
     //************** TEST AREA START *************************
