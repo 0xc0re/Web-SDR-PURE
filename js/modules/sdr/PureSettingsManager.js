@@ -25,13 +25,28 @@ define([
             this.buildModeDropDown(pMenuBar);
             pMenuBar.addChild(new MenuSeparator());
             this.buildBaseBandDropDown(pMenuBar);
-            pMenuBar.addChild(new MenuSeparator());
-            this.buildFreqDialog(pMenuBar);
+
             pMenuBar.addChild(new MenuSeparator());
             this.buildAudioDialog(pMenuBar);
 
             pMenuBar.placeAt(containerId);
             pMenuBar.startup();
+        },
+
+        buildPanel: function(container){
+            this.buildFreqPane(container);
+        },
+
+        buildFreqPane: function(mainContainer){
+            var container = domConstruct.create("div", {}, mainContainer);
+
+            domConstruct.create("label", {innerHTML: "Mid Frequency&nbsp;:&nbsp;", style:"float:left;"}, container);
+            domConstruct.create("div", {innerHTML: this.midFrequency, style:"float:left;"}, container);
+
+            domConstruct.create("br", {}, container);
+
+            domConstruct.create("label", {innerHTML: "Own Frequency:&nbsp;", style:"float:left;"}, container);
+            domConstruct.create("input", {type: "number", value: this.midFrequency, id: "freqInput", style:"float:left;"}, container);
         },
 
         buildModeDropDown: function(parentNode){
@@ -51,7 +66,7 @@ define([
 
         buildBaseBandDropDown: function(parentNode){
             var pSubMenu = new DropDownMenu({id: "bandDrDwn"});
-            var bands = Object.keys(this.cmdMap.BAND_MAP);
+            var bands = Object.keys(this.cmdMap.BAND_SCOPE);
             for(var i=0; i < bands.length; i++){
                 pSubMenu.addChild(new RadioMenuItem({
                     label: bands[i],
@@ -89,41 +104,6 @@ define([
                 label: "Frequency",
                 popup: myDialog
             }));
-        },
-
-        buildMidFreqLabel: function(){
-            var data = domConstruct.create("td");
-            var label = domConstruct.create("label", {innerHTML: "Mid Frequency:"});
-            data.appendChild(label);
-            return data;
-        },
-
-        buildMidFreqVal: function(){
-            var data = domConstruct.create("td");
-            var input = domConstruct.create("div", {innerHTML: this.midFrequency});
-            data.appendChild(input);
-            return data;
-        },
-
-        buildFreqLabel: function(){
-            var data = domConstruct.create("td");
-            var label = domConstruct.create("label", {innerHTML: "Own Frequency:"});
-            data.appendChild(label);
-            return data;
-        },
-
-        buildFreqVal: function(){
-            var data = domConstruct.create("td");
-            var input = domConstruct.create("input", {type: "number", value: this.midFrequency, id: "freqInput"});
-            data.appendChild(input);
-            return data;
-        },
-
-        buildFreqButton: function(){
-            var data = domConstruct.create("td");
-            var button = domConstruct.create("button", {innerHTML: "Set Frequency", id: "freqButton"});
-            data.appendChild(button);
-            return data;
         },
 
         buildAudioDialog: function(parentNode){

@@ -38,7 +38,7 @@ require([
         });
 
         function sendData(){
-            var amount = 10;
+            var amount = 5;
             while(amount > 0){
                 amount--;
                 this.webRadio.handleSpectralData(this.spectByteArr);

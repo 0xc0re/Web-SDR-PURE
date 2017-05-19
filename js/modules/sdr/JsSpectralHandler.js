@@ -4,7 +4,6 @@ define([
     "dojo/dom",
 ], function(declare, domConstruct, dom){
     return declare(null, {
-        canvasHeight: null,
         HEADER_LENGTH: 15,
 
         /**
@@ -13,11 +12,12 @@ define([
         AOI_Upper: 20,
         AOI_Lower: 10,
 
-        canvas: null,
-
         containerId: null,
         samplesSpeed: null,
         samplesWidth: null,
+
+        spectralHeight: (256/4),
+        spectralView: null,
 
         constructor: function(params){
             this.containerId = params.containerId;
@@ -25,12 +25,28 @@ define([
             this.samplesWidth = params.samplesWidth;
         },
 
+        createSpectralView: function(height){
+            this.drawSpectralVision();
+            this.drawCascade(height)
+        },
+
+        drawSpectralVision: function(){
+            var sdr = dom.byId(this.containerId);
+            var canvas = domConstruct.create("canvas", {id:"jsSpectral"}, sdr);
+            canvas.height = this.spectralHeight;
+            canvas.width = this.samplesWidth;
+            canvas.style.height = this.spectralHeight+"px";
+            canvas.style.width = "100%";
+            canvas.style.background = "black";
+            canvas.style.marginBottom = "-8px";
+            this.spectralView = canvas.getContext("2d");
+        },
+
         /**
          * This method builds the base canvas for the jsCascade
          * @param height - of the canvas in px
          */
-        drawCanvas: function(height){
-            this.canvasHeight = height;
+        drawCascade: function(height){
             var sdr = dom.byId(this.containerId);
             var containter = domConstruct.create("div", {id:"jsCascade"}, sdr);
             containter.style.lineHeight = "0px";
@@ -101,6 +117,10 @@ define([
                     val = 255-val;
                 }
 
+                var height = this.spectralHeight - val/4;
+                this.spectralView.fillStyle = "#ff9900";
+                this.spectralView.fillRect(i - this.HEADER_LENGTH, height, 1, 1);
+
                 canvas.fillStyle = "#00"+val.toString(16)+"00";
                 if(i == middlePositon){
                     //Middle frequency line
@@ -108,14 +128,8 @@ define([
                 }
                 canvas.fillRect(i - this.HEADER_LENGTH, 0, 1, 1);
             }
-
             //Delete last item from canvas
             this.container.lastChild.remove();
         },
-
-        calculateSignalStrength: function(spectralData){
-
-        },
-
     });
 });

@@ -3,14 +3,14 @@ define([
     "dojo/dom",
     "dojo/on",
     "modules/sdr/CmdMap",
-    "modules/sdr/JsCascade",
+    "modules/sdr/JsSpectralHandler",
     "modules/sdr/JsAudio",
-    "modules/sdr/PureMenubar",
-], function(declare, dom, on,  CmdMap, JsCascade, JsAudio, PureMenubar){
+    "modules/sdr/PureSettingsManager",
+], function(declare, dom, on,  CmdMap, JsSpectralHandler, JsAudio, PureSetMgr){
     return declare(null, {
         containerNode: null,
-        cascade: null,
-        menuBar: null,
+        spectralHandler: null,
+        settingsPanel: null,
         audioPlayer: null,
         cmdMap: null,
 
@@ -27,23 +27,24 @@ define([
          */
         constructor: function(params){
             this.containerNode = dom.byId(params.containerId);
-            this.cascade = new JsCascade(params);
+            this.spectralHandler = new JsSpectralHandler(params);
             this.cmdMap = new CmdMap();
-            this.menuBar = new PureMenubar(this.cmdMap, params.midFrequency);
+            this.settingsPanel = new PureSetMgr(this.cmdMap, params.midFrequency);
             this.audioPlayer = new JsAudio();
             this.audioPlayer.initializeAudio();
         },
 
         buildSDRContent: function(){
             //Setup Frame
-            this.menuBar.buildMenubar(this.containerNode.id);
-            this.cascade.drawCanvas(200);
+            this.settingsPanel.buildMenubar(this.containerNode.id);
+            this.settingsPanel.buildPanel(this.containerNode);
+            this.spectralHandler.createSpectralView(200);
             this.initBL();
         },
 
         handleSpectralData: function(data){
             console.log("handleSpectralData");
-            this.cascade.processSpectrumData(data);
+            this.spectralHandler.processSpectrumData(data);
         },
 
         handleAudioData: function(data){
@@ -75,27 +76,33 @@ define([
             var radioBtns = dom.byId("bandDrDwn").children[0].children;
             for(var i=0; i < radioBtns.length; i++){
                 on(radioBtns[i], "click", function(e){
-                    var freq = self.cmdMap.BAND_MAP[e.target.innerHTML]
+                    var freqArr = self.cmdMap.BAND_SCOPE[e.target.innerHTML]
+                    var freq = (+freqArr[0] + +freqArr[1])/2;
+                    console.log("freq");
+                    console.log(freq);
                     var message = "setFrequency "+freq;
-                    // self.transmitToDsp(message);
+                    self.transmitToDsp(message);
                     dom.byId("freqInput").value = freq;
                 });
             }
         },
 
         initFreqLogic: function(){
-            var freqBtn = dom.byId("freqButton");
+            var freqIn = dom.byId("freqInput");
             var self = this;
-            on(freqBtn, "click", function(e){
-                var freq = dom.byId("freqInput").value;
-                var message = "setFrequency "+freq;
+            on(freqIn, "change", function(e){
+                var message = "setFrequency "+this.value;
+                self.transmitToDsp(message);
+            });
+            on(freqIn, "keyup", function(e){
+                var message = "setFrequency "+this.value;
                 self.transmitToDsp(message);
             });
         },
 
         initVolumeLogic: function(){
             var self = this;
-            on(this.menuBar.slider, "change", function(e){
+            on(this.settingsPanel.slider, "change", function(e){
                 var volume = this.value / 100;
                 self.audioPlayer.setVolume(volume);
             });

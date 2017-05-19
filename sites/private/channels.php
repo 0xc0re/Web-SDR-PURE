@@ -19,10 +19,8 @@ function connectToManager(){
     $host = getManagerIp();
     $port = getManagerPort();
 
+    //Get Channels
     $result = sendMessageToSocket($host, $port, $message);
-
-    //Test data
-    //$result = '[{"freq":"24800000","state":"free"},{"freq":"24800000","state":"free"}]';
 
     //Decode JSON String
     $channelArray = json_decode($result);
