@@ -18,36 +18,24 @@
 </div>
 
 <?php
-includeScripts();
 handleSdrState();
-
-function includeScripts(){
-    $userLevel = getUserLevel();
-
-    echo '<script src="../../js/sites/SdrListener.js"></script>';
-//    if($userLevel <= 1){
-////Insert admin script
-//    } elseif($userLevel <= 10){
-////Insert moderator script
-//    } elseif($userLevel <= 20){
-//        echo '<script src="../../js/sites/sdrListener.js"></script>';
-//    }
-}
 
 function handleSdrState(){
     $userLevel = getUserLevel();
     if($userLevel <= 20){
-        if(isset($_POST["moderatorChannel"]) or isset($_POST["adminChannel"])){
+        if(isset($_POST["moderatorChannel"]) or isset($_POST["stopChannel"])){
             showError("Wrong permissions");
             return;
         }
     }
     if($userLevel <= 10) {
-        if(isset($_POST["adminChannel"])){
+        if(isset($_POST["stopChannel"])){
             showError("Wrong permissions");
             return;
         }
     }
+    echo '<script src="../../js/sites/SdrManager.js"></script>';
+
 //    $_SESSION["sdr"] = true; //In use
 //    $_SESSION["sdr"] = false; //Init state
     unset($_SESSION["sdr"]); //TODO Just 4 test reasons
@@ -58,9 +46,9 @@ function handleSdrState(){
         if(isset($_POST["listenChannel"])){
             handleListenCommand();
         } else if(isset($_POST["moderatorChannel"])) {
-
-        }else if(isset($_POST["adminChannel"])) {
-
+            handleModeratorCommand();
+        }else if(isset($_POST["stopChannel"])) {
+            handleStopCommand();
         }
     }
 }
@@ -72,6 +60,47 @@ function handleListenCommand(){
 
     //Message to send
     $message = "listenChannel(".$_POST["listenChannel"].")";
+    $result = sendMessageToSocket($host, $port, $message);
+    $result = json_decode($result);
+
+    if($result->state == "f"){
+        showError($result->message);
+    } else {
+        setMidFrequency($_POST["midFreq"]);
+        setDspPort((string)$result->port);
+        $_SESSION["sdr"] = true;
+    }
+}
+
+function handleModeratorCommand(){
+    echo '<script src="../../js/sites/SdrManager.js"></script>';
+
+    //Get server location
+    $host = getManagerIp();
+    $port = getManagerPort();
+
+    //Message to send
+    $message = "startChannel(".$_POST["moderatorChannel"].")";
+    $result = sendMessageToSocket($host, $port, $message);
+    $result = json_decode($result);
+
+    if($result->state == "f"){
+        showError($result->message);
+    } else {
+        setMidFrequency($_POST["midFreq"]);
+        setDspPort((string)$result->port);
+        $_SESSION["sdr"] = true;
+    }
+}
+
+//TODO Function check (What to do after the channel has stopped?)
+function handleStopCommand(){
+    //Get server location
+    $host = getManagerIp();
+    $port = getManagerPort();
+
+    //Message to send
+    $message = "stopChannel(".$_POST["stopChannel"].")";
     $result = sendMessageToSocket($host, $port, $message);
     $result = json_decode($result);
 

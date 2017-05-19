@@ -90,11 +90,7 @@ define([
         initFreqLogic: function(){
             var freqIn = dom.byId("freqInput");
             var self = this;
-            on(freqIn, "change", function(e){
-                var message = "setFrequency "+this.value;
-                self.transmitToDsp(message);
-            });
-            on(freqIn, "keyup", function(e){
+            on(freqIn, "input", function(e){
                 var message = "setFrequency "+this.value;
                 self.transmitToDsp(message);
             });

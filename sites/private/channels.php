@@ -20,7 +20,8 @@ function connectToManager(){
     $port = getManagerPort();
 
     //Get Channels
-    $result = sendMessageToSocket($host, $port, $message);
+//    $result = sendMessageToSocket($host, $port, $message);
+    $result = '[{"freq":"24800000","state":"free"},{"freq":"24800000","state":"free"}]';
 
     //Decode JSON String
     $channelArray = json_decode($result);
@@ -75,20 +76,21 @@ function buildUserContent($channelNr, $midFreq) {
     $action= getServer();
     $action .= "?site=sdr";
     $form = "<form class='borderlessForm' action='".$action."' method='post'>";
-    //Add hidden field with middle freq
-    $button = '<button type="submit" value="'.$channelNr.'" name="listenChannel">Listen</button>';
     $freq = '<input type="hidden" name="midFreq" value="'.$midFreq.'">';
 
     $userContent = "";
     $userLevel = getUserLevel();
     if($userLevel <= 20){
+        $button = '<button type="submit" value="'.$channelNr.'" name="listenChannel">Listen</button>';
         $userContent .= '<td>'.$form.$button.$freq.'</form></td>';
     }
     if($userLevel <= 10) {
-        $userContent .= '<td><button>Connect</button></td>';
+        $button = '<button type="submit" value="'.$channelNr.'" name="moderatorChannel">Connect</button>';
+        $userContent .= '<td>'.$form.$button.$freq.'</form></td>';
     }
     if($userLevel <= 1){
-        $userContent .= '<td><button>Stop</button></td>';
+        $button = '<button type="submit" value="'.$channelNr.'" name="stopChannel">Stop</button>';
+        $userContent .= '<td>'.$form.$button.$freq.'</form></td>';
     }
     return $userContent;
 
