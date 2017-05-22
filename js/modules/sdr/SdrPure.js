@@ -43,13 +43,11 @@ define([
         },
 
         handleSpectralData: function(data){
-            console.log("handleSpectralData");
             this.spectralHandler.processSpectrumData(data);
         },
 
         handleAudioData: function(data){
-            console.log("handleAudioData");
-            this.audioPlayer.playAudio(data);
+            this.audioPlayer.decodeAudio(data);
         },
 
         initBL: function(){
@@ -78,8 +76,6 @@ define([
                 on(radioBtns[i], "click", function(e){
                     var freqArr = self.cmdMap.BAND_SCOPE[e.target.innerHTML]
                     var freq = (+freqArr[0] + +freqArr[1])/2;
-                    console.log("freq");
-                    console.log(freq);
                     var message = "setFrequency "+freq;
                     self.transmitToDsp(message);
                     dom.byId("freqInput").value = freq;
@@ -91,6 +87,7 @@ define([
             var freqIn = dom.byId("freqInput");
             var self = this;
             on(freqIn, "input", function(e){
+                //TODO einbauen eines Timers
                 var message = "setFrequency "+this.value;
                 self.transmitToDsp(message);
             });

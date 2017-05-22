@@ -71,3 +71,13 @@ function validateEmail($email) {
     }
 }
 
+function showError($message){
+    $output = '<div id="showMsg" class="container">';
+    $output .= ' <div class="sixteen columns showError">';
+    $output .= $message;
+    $output .= '</div>';
+    $output .= '</div>';
+    echo $output;
+    die();
+}
+

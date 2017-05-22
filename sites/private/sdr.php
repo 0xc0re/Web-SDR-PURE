@@ -22,13 +22,13 @@ handleSdrState();
 
 function handleSdrState(){
     $userLevel = getUserLevel();
-    if($userLevel <= 20){
+    if($userLevel >= 20){
         if(isset($_POST["moderatorChannel"]) or isset($_POST["stopChannel"])){
             showError("Wrong permissions");
             return;
         }
     }
-    if($userLevel <= 10) {
+    if($userLevel >= 10) {
         if(isset($_POST["stopChannel"])){
             showError("Wrong permissions");
             return;
@@ -73,8 +73,6 @@ function handleListenCommand(){
 }
 
 function handleModeratorCommand(){
-    echo '<script src="../../js/sites/SdrManager.js"></script>';
-
     //Get server location
     $host = getManagerIp();
     $port = getManagerPort();

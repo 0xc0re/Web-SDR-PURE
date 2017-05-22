@@ -21,7 +21,7 @@ define([
         },
 
         buildMenubar: function(containerId){
-            var pMenuBar = new MenuBar({});
+            var pMenuBar = new MenuBar({id: "pureSettings"});
             this.buildModeDropDown(pMenuBar);
             pMenuBar.addChild(new MenuSeparator());
             this.buildBaseBandDropDown(pMenuBar);

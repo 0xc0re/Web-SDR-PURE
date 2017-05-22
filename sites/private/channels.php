@@ -20,8 +20,8 @@ function connectToManager(){
     $port = getManagerPort();
 
     //Get Channels
-//    $result = sendMessageToSocket($host, $port, $message);
-    $result = '[{"freq":"24800000","state":"free"},{"freq":"24800000","state":"free"}]';
+    $result = sendMessageToSocket($host, $port, $message);
+    //$result = '[{"freq":"24800000","state":"free"},{"freq":"24800000","state":"free"}]';
 
     //Decode JSON String
     $channelArray = json_decode($result);
@@ -94,16 +94,6 @@ function buildUserContent($channelNr, $midFreq) {
     }
     return $userContent;
 
-}
-
-function showError($message){
-    $output = '<div id="showMsg" class="container">';
-    $output .= ' <div class="sixteen columns showError">';
-    $output .= $message;
-    $output .= '</div>';
-    $output .= '</div>';
-    echo $output;
-    die();
 }
 
 ?>

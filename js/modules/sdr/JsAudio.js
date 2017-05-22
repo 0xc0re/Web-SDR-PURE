@@ -5,8 +5,12 @@ define([
 ], function(declare, domConstruct, on){
     return declare(null, {
         audioCtx: null,
-        source: null,
         gainNode: null,
+
+        masterVolume: 1,
+        decodedBuffer: [],
+
+        samplingRate: 8000,
 
         constructor: function(params){
             this.initDecodeTable();
@@ -16,56 +20,53 @@ define([
         initializeAudio: function(){
             var AudioContext = window.AudioContext || window.webkitAudioContext;
             this.audioCtx  = new AudioContext();
-
-            this.source = this.audioCtx.createBufferSource();
             this.gainNode = this.audioCtx.createGain();
-
-            this.source.connect(this.gainNode);
-            this.gainNode.connect(this.audioCtx.destination);
         },
 
         setVolume: function(value){
-            this.gainNode.gain.value = value;
+            this.masterVolume = value;
         },
 
-        playAudio: function (data){
-            if (data[0] != 1)
-                return;
-
-            var startTime = 0;
-
-            var decoded = [];
-
-            for (var i = 0, audioChunk; audioChunk = data[i]; ++i) {
-                // Create/set audio buffer for each chunk
-                var audioBuffer = this.audioCtx.createBuffer(1, 800, 8000);
-                if (!audioBuffer)
-                {
-                    continue;
-                }
-                audioBuffer.getChannelData(0).set(audioChunk);
-
-                // var source = this.audioCtx.createBufferSource();
-                this.source.buffer = audioBuffer;
-                this.source.noteOn(startTime);
-                this.source.connect(this.audioCtx.destination);
-                startTime += audioBuffer.duration;
+        decodeAudio: function (data){
+            var decodeFraction = 32768;
+            for(var i=0; i < data.length; i++){
+                var buffVal = this.decodeTable[data[i]] / decodeFraction;
+                this.decodedBuffer.push(buffVal);
             }
-    },
 
-    initDecodeTable: function(){
-        decodeTable = new Array(256);
-        for (var i = 0; i < 265; i++){
-            var input = i ^ 85;
-            var mantissa = (input & 15) << 4;
-            var segment = (input & 112) >> 4;
-            var value = mantissa + 8;
-            if (segment >= 1) value += 256;
-            if (segment > 1) value = value << (segment - 1);
-            if ((input & 128) == 0) value *= -1;
-            decodeTable[i] = value;
-        }
-    },
+            if(this.decodedBuffer.length >= this.samplingRate) this.playAudio();
+            console.log(this.decodedBuffer.length);
+        },
+
+        playAudio: function(){
+            var source = this.audioCtx.createBufferSource();
+            var audioBuffer = this.audioCtx.createBuffer(1, this.samplingRate, this.samplingRate);
+
+            var playBuff = this.decodedBuffer.splice(0, this.samplingRate);
+            audioBuffer.getChannelData(0).set(playBuff);
+
+            source.buffer = audioBuffer;
+
+            this.gainNode.gain.value = this.masterVolume;
+            this.gainNode.connect(this.audioCtx.destination);
+
+            source.connect(this.gainNode);
+            source.start();
+        },
+
+        initDecodeTable: function(){
+            this.decodeTable = new Array(256);
+            for (var i = 0; i < 265; i++){
+                var input = i ^ 85;
+                var mantissa = (input & 15) << 4;
+                var segment = (input & 112) >> 4;
+                var value = mantissa + 8;
+                if (segment >= 1) value += 256;
+                if (segment > 1) value = value << (segment - 1);
+                if ((input & 128) == 0) value *= -1;
+                this.decodeTable[i] = value;
+            }
+        },
 
     });
 });
