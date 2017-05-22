@@ -38,7 +38,7 @@ define([
             canvas.style.height = this.spectralHeight+"px";
             canvas.style.width = "100%";
             canvas.style.background = "black";
-            canvas.style.marginBottom = "-8px";
+            canvas.style.marginBottom = "-5px";
             this.spectralView = canvas.getContext("2d");
         },
 
@@ -103,6 +103,17 @@ define([
             var canvas = this.createCanvasPart(this.container);
             canvas = canvas.getContext("2d");
 
+            //Clear Spectraloverview
+            this.spectralView.fillStyle = "#000000";
+            this.spectralView.clearRect(0, 0, this.samplesWidth, this.spectralHeight);
+
+            //Prepare spectralview
+            // this.spectralView.fillStyle = "#ff9900";
+            this.spectralView.strokeStyle = "#ff9900";
+            this.spectralView.beginPath();
+            var specStart = false;
+
+
             //Draw on new canvas
             for (i = this.HEADER_LENGTH; i < arrayRange; i++) {
                 var val = spectralData[i];
@@ -118,8 +129,18 @@ define([
                 }
 
                 var height = this.spectralHeight - val/4;
+
+                if(!specStart){
+                    this.spectralView.moveTo(i - this.HEADER_LENGTH, height);
+                    specStart=true;
+                } else {
+                    this.spectralView.lineTo(i - this.HEADER_LENGTH, height);
+                }
+
+                /* todo extraced for test reasons: Point Drawer
                 this.spectralView.fillStyle = "#ff9900";
                 this.spectralView.fillRect(i - this.HEADER_LENGTH, height, 1, 1);
+                */
 
                 canvas.fillStyle = "#00"+val.toString(16)+"00";
                 if(i == middlePositon){
@@ -128,6 +149,9 @@ define([
                 }
                 canvas.fillRect(i - this.HEADER_LENGTH, 0, 1, 1);
             }
+
+            this.spectralView.stroke();
+
             //Delete last item from canvas
             this.container.lastChild.remove();
         },
