@@ -9,20 +9,26 @@ define([
         /**
          * Area of interest
          */
-        AOI_Upper: 20,
-        AOI_Lower: 10,
+        AOI_Upper: 10,
+        AOI_Lower: 20,
 
         containerId: null,
         samplesSpeed: null,
         samplesWidth: null,
 
-        spectralHeight: (256/4),
+        spectralArrayLength: null,
+        canvasMidPos: null,
+
+        spectalDivisor: 4,
+        spectralHeight: 256 / 4,
         spectralView: null,
 
         constructor: function(params){
             this.containerId = params.containerId;
             this.samplesSpeed = params.samplesSpeed;
             this.samplesWidth = params.samplesWidth;
+            this.spectralArrayLength = +this.samplesWidth + +this.HEADER_LENGTH;
+            this.canvasMidPos = Math.round(this.samplesWidth/2 + this.HEADER_LENGTH);
         },
 
         createSpectralView: function(height){
@@ -63,7 +69,6 @@ define([
             var wrapper = domConstruct.create("div", {className:"cascadePart"});
             wrapper.style.height = "1px";
             parentNode.insertBefore(wrapper, parentNode.firstChild)
-
             var canvPart = domConstruct.create("canvas", {className:"cascadePart"}, wrapper);
             canvPart.style.background = "black";
             canvPart.width = this.samplesWidth;
@@ -79,57 +84,28 @@ define([
         processSpectrumData: function(spectralData) {
             if(!this.container) return;
 
-            var arrayRange = +this.samplesWidth + +this.HEADER_LENGTH;
-            var middlePositon = Math.round(this.samplesWidth/2 + this.HEADER_LENGTH);
+            this.processSpectralHeader(spectralData);
+            this.calculateAreaOfInterest(spectralData);
 
-            //Process header
-            var samplesLen = spectralData[4] + spectralData[3] << 8;
-            var mainRx = spectralData[6] + spectralData[5] << 8;
-            var subRx = spectralData[8] + spectralData[7] << 8;
-            var samplingRate = spectralData[12] + spectralData[11] << 8 + spectralData[10] << 16 + spectralData[9] << 24;
+            //waterfall: Create new canvas
+            var waterfallCanvas = this.createCanvasPart(this.container);
+            waterfallCanvas = waterfallCanvas.getContext("2d");
 
-            var avg = 0;
-            for (var i = this.HEADER_LENGTH; i < arrayRange; i++) {
-                avg += spectralData[i];
-            }
-            avg = (avg / this.samplesWidth);
-            var lo = avg - this.AOI_Upper;
-            var hi = avg + this.AOI_Lower;
-            var diff = hi - lo;
-
-            var frac = 255 / diff;
-
-            //create new canvas
-            var canvas = this.createCanvasPart(this.container);
-            canvas = canvas.getContext("2d");
-
-            //Clear Spectraloverview
+            //spectralView: Clear canvas
             this.spectralView.fillStyle = "#000000";
             this.spectralView.clearRect(0, 0, this.samplesWidth, this.spectralHeight);
 
-            //Prepare spectralview
-            // this.spectralView.fillStyle = "#ff9900";
+            //spectralView: Prepare to draw
             this.spectralView.strokeStyle = "#ff9900";
             this.spectralView.beginPath();
             var specStart = false;
 
+            //Handle each value individually
+            for (var i = this.HEADER_LENGTH; i < this.spectralArrayLength; i++) {
+                var val = this.calculateSpectralValue(spectralData[i]);
 
-            //Draw on new canvas
-            for (i = this.HEADER_LENGTH; i < arrayRange; i++) {
-                var val = spectralData[i];
-
-                if (val < lo)
-                    val = 0;
-                else if (val > hi)
-                    val = 255;
-                else {
-                    val = (val - lo) * frac;
-                    val = parseInt(val);
-                    val = 255-val;
-                }
-
-                var height = this.spectralHeight - val/4;
-
+                //spectralView: Draw from point to point lines
+                var height = this.spectralHeight - val/this.spectalDivisor;
                 if(!specStart){
                     this.spectralView.moveTo(i - this.HEADER_LENGTH, height);
                     specStart=true;
@@ -137,23 +113,50 @@ define([
                     this.spectralView.lineTo(i - this.HEADER_LENGTH, height);
                 }
 
-                /* todo extraced for test reasons: Point Drawer
-                this.spectralView.fillStyle = "#ff9900";
-                this.spectralView.fillRect(i - this.HEADER_LENGTH, height, 1, 1);
-                */
-
-                canvas.fillStyle = "#00"+val.toString(16)+"00";
-                if(i == middlePositon){
-                    //Middle frequency line
-                    canvas.fillStyle = "#FF0000";
-                }
-                canvas.fillRect(i - this.HEADER_LENGTH, 0, 1, 1);
+                //waterfall: Draw one value
+                waterfallCanvas.fillStyle = "#00"+val.toString(16)+"00";
+                //Middle frequency line
+                if(i == this.canvasMidPos) waterfallCanvas.fillStyle = "#FF0000";
+                waterfallCanvas.fillRect(i - this.HEADER_LENGTH, 0, 1, 1);
             }
-
+            //spectralView: Draw
             this.spectralView.stroke();
 
-            //Delete last item from canvas
+            //waterfall: Delete last item from canvas
             this.container.lastChild.remove();
         },
+
+        processSpectralHeader: function(spectralArray){
+            //Process header
+            var samplesLen = spectralArray[4] + spectralArray[3] << 8;
+            var mainRx = spectralArray[6] + spectralArray[5] << 8;
+            var subRx = spectralArray[8] + spectralArray[7] << 8;
+            var samplingRate = spectralArray[12] + spectralArray[11] << 8 + spectralArray[10] << 16 + spectralArray[9] << 24;
+        },
+
+        calculateAreaOfInterest: function(spectralArray){
+            var avg = 0;
+            for (var i = this.HEADER_LENGTH; i < this.spectralArrayLength; i++) {
+                avg += spectralArray[i];
+            }
+            avg = (avg / this.samplesWidth);
+            this.calc_AOI_lower = avg - this.AOI_Lower;
+            this.calc_AOI_upper = avg + this.AOI_Upper;
+            var diff = this.calc_AOI_upper - this.calc_AOI_lower;
+            this.calc_AOI_frac = 255 / diff;
+        },
+
+        calculateSpectralValue: function(value){
+            if (value < this.calc_AOI_lower)
+                value = 0;
+            else if (value > this.calc_AOI_upper)
+                value = 255;
+            else {
+                value = (value - this.calc_AOI_lower) * this.calc_AOI_frac;
+                value = parseInt(value);
+                value = 255-value;
+            }
+            return value;
+        }
     });
 });
