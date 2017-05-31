@@ -1,12 +1,16 @@
-/** Forms **/
+/** PURE Utils **/
+.errorMessage { color: red; }
+
+/** PURE Settings **/
+.settingsPane { float:left }
+
+/** PURE Forms **/
 .formLabelTable { width:20%; float:left; padding-top:10px; }
 .formInputTable { width:80% !important; }
 .borderlessForm { border:none; }
 .formHeading3 { text-align: center; }
-.errorMessage { color: red; }
 
-/* Tables
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/** PURE Tables **/
 th { font-weight: bold }
 th,
 td {padding: 12px 15px;

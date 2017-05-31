@@ -21,6 +21,7 @@ define([
 
         /** In Hz **/
         BAND_SCOPE : {
+            "Gen": [false, false],
             "6 Meters": [50000000, 52000000],
             "10 Meters": [28000000, 29700000],
             "12 Meters": [24890000, 24990000],

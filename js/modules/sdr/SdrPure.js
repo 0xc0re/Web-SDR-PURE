@@ -62,8 +62,11 @@ define([
             var radioBtns = dom.byId("modeDrDwn").children[0].children;
             for(var i=0; i < radioBtns.length; i++){
                 on(radioBtns[i], "click", function(e){
-                    var mode = self.cmdMap.MODE_MAP[e.target.innerHTML];
-                    var message = "setMode "+mode;
+                    var mode = e.target.innerHTML;
+                    dom.byId("modeMenu").children[0].innerHTML = "Mode: "+mode;
+
+                    var modeNr = self.cmdMap.MODE_MAP[mode];
+                    var message = "setMode "+modeNr;
                     self.transmitToDsp(message);
                 });
             }
@@ -74,11 +77,16 @@ define([
             var radioBtns = dom.byId("bandDrDwn").children[0].children;
             for(var i=0; i < radioBtns.length; i++){
                 on(radioBtns[i], "click", function(e){
-                    var freqArr = self.cmdMap.BAND_SCOPE[e.target.innerHTML]
-                    var freq = (+freqArr[0] + +freqArr[1])/2;
-                    var message = "setFrequency "+freq;
-                    self.transmitToDsp(message);
-                    dom.byId("freqInput").value = freq;
+                    var band = e.target.innerHTML;
+                    var freqArr = self.cmdMap.BAND_SCOPE[band];
+                    dom.byId("bandMenu").children[0].innerHTML = "Band: "+band;
+
+                    if(freqArr[0]){
+                        var freq = (+freqArr[0] + +freqArr[1])/2;
+                        dom.byId("freqInput").value = freq;
+                        var message = "setFrequency "+freq;
+                        self.transmitToDsp(message);
+                    }
                 });
             }
         },
@@ -87,7 +95,9 @@ define([
             var freqIn = dom.byId("freqInput");
             var self = this;
             on(freqIn, "input", function(e){
-                //TODO einbauen eines Timers
+                self.settingsPanel.ownFrequency = this.value;
+                var band = self.settingsPanel.getMatchingBand();
+                dom.byId("bandMenu").children[0].innerHTML = "Band: "+band;
                 var message = "setFrequency "+this.value;
                 self.transmitToDsp(message);
             });
@@ -97,6 +107,25 @@ define([
             var self = this;
             on(this.settingsPanel.slider, "change", function(e){
                 var volume = this.value / 100;
+                self.audioPlayer.setVolume(volume);
+
+                if(this.value > 0){
+                    self.settingsPanel.muteButton.set('label', "Mute")
+                    self.settingsPanel.muteButton.muted = false;
+                } else {
+                    self.settingsPanel.muteButton.set('label', "Unmute")
+                    self.settingsPanel.muteButton.muted = true;
+                }
+            });
+            on(this.settingsPanel.muteButton, "click", function(e){
+                if(this.muted){
+                    this.set('label', "Mute");
+                    var volume = self.settingsPanel.slider.value;
+                } else {
+                    this.set('label', "Unmute");
+                    var volume = 0;
+                }
+                this.muted = !this.muted;
                 self.audioPlayer.setVolume(volume);
             });
         },
