@@ -20,11 +20,18 @@ function initChecks(){
 }
 
 function checkIfNewAccount(){
+    parse_str($_SERVER['QUERY_STRING']);
 	if(isset($_SESSION['isNew'])){
 		if(!$_SESSION['isNew']) return;
-		if($_SERVER['QUERY_STRING'] == "site=profile") return;
-        redirectTo("site=profile");
+		if($site == "My Profile") return;
+        redirectTo("site=My Profile");
 	}
+}
+
+function redirectToHome(){
+    $url = $_SERVER["PHP_SELF"];
+    header('Location: '.$url);
+    die();
 }
 
 function redirectTo($site){
@@ -35,7 +42,10 @@ function redirectTo($site){
 }
 
 function checkIfLogout(){
-	if($_SERVER['QUERY_STRING'] == "site=logout") logout();
+	if($_SERVER['QUERY_STRING'] == "site=Logout"){
+        logout();
+        redirectToHome();
+    }
 }
 
 function listenToFormEvents(){
