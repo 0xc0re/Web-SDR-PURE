@@ -14,9 +14,9 @@ include( dirname(__FILE__) . "/config/configManager.php");
 initChecks();
 
 function initChecks(){
-	listenToFormEvents();
 	checkIfLogout();
 	checkIfNewAccount();
+    listenToFormEvents();
 }
 
 function checkIfNewAccount(){
@@ -58,6 +58,7 @@ function listenToFormEvents(){
 		} else if(isset($_POST['logout'])){
 			logout();
 			unset($_POST['logout']);
+            redirectToHome();
 		} else if(isset($_POST['changeUser'])){
 			saveUser();
             unset($_POST['changeUser']);
@@ -66,19 +67,6 @@ function listenToFormEvents(){
             unset($_POST['changeConfig']);
         }
 	}
-}
-
-function validateInput($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
-
-function validateEmail($email) {
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-//        "Invalid email format";
-    }
 }
 
 function showError($message){
@@ -90,4 +78,3 @@ function showError($message){
     echo $output;
     die();
 }
-

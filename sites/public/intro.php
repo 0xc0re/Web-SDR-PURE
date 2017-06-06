@@ -20,6 +20,7 @@ include( dirname(__FILE__) . "/../../customContent/content/welcome.php");
 <?php endif; ?>
 
 <!-- Modal Login -->
+<script src="../../js/sites/IntroLogin.js"></script>
 <div class="container">
     <div class="four columns">&nbsp;</div>
     <div class="eight columns">
@@ -30,13 +31,14 @@ include( dirname(__FILE__) . "/../../customContent/content/welcome.php");
             </form>
         <?php else : ?>
             <!-- Button to open the modal login form -->
-            <button onclick="openLoginFrame();">Login</button>
+            <button id="loginButton">Login</button>
+
             <!-- The Modal -->
             <div id="modalLogin" class="modal">
                 <!-- Modal Content -->
                 <form class="modal-content animate" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                     <div class="imgcontainer">
-                        <span onclick="closeLoginFrame();" class="closeModal" title="Close Modal">&times;</span>
+                        <span id="closeButton" class="closeModal" title="Close Modal">&times;</span>
                         <img src="./images/login/avatar.png" alt="Avatar" class="avatar">
                     </div>
 
@@ -48,12 +50,10 @@ include( dirname(__FILE__) . "/../../customContent/content/welcome.php");
                         <input type="password" placeholder="Enter Password" name="psw" required>
 
                         <button type="submit" name="login">Login</button>
-    <!--                    <input type="checkbox" checked="checked"> Remember me-->
                     </div>
 
                     <div class="modalContainer" style="background-color:#f1f1f1">
-                        <button type="button" onclick="closeLoginFrame();" class="cancelbtn">Cancel</button>
-    <!--                    <span class="psw">Forgot <a href="#">password?</a></span>-->
+                        <button id="cancelButton" type="button" class="cancelbtn">Cancel</button>
                     </div>
                 </form>
             </div>

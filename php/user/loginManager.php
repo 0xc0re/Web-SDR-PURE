@@ -25,10 +25,10 @@ function login(){
     $username = validateInput($_POST["uname"]);
     $user = getUserNode($username);
     if($user){
-        if($user->password == ""){
-            checkDefaultPw($user);
-        } else {
+        if($user->password != ""){
             checkPw($user);
+        } else {
+            checkDefaultPw($user);
         }
     } else {
         $_SESSION["ERROR_MESSAGE"] = "User does not exist";

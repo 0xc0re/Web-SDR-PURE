@@ -24,7 +24,6 @@
     <!-- Javascript
   ================================================== -->
     <script src="js/dojo/dojo.js" data-dojo-config="async: true"></script>
-    <script src="js/modules/user/ModalHandler.js"></script>
     <script src="js/modules/utils/jquery.min.js"></script>
 
     <!--[if lt IE 9]>

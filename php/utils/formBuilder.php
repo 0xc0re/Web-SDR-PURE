@@ -25,8 +25,8 @@ function buildEndTag(){
     return '</form>';
 }
 
-function buildH3Form($value){
-    return '<h3 class="formHeading3">'.$value.'</h3>';
+function buildH3Form($title){
+    return '<h3 class="formHeading3">'.$title.'</h3>';
 }
 
 
